@@ -6,15 +6,26 @@ public class Matrix {
 	private int column;
 	public static final int maxSize = 100;
 
-	public Matrix (int m, int n) {
-		this.row = m;
-		this.column = n;
+	/* Konstruktor */
+	public Matrix () {
 		this.mTab = new float[maxSize][maxSize];
 	}
 
+	/* Selektor */
 	public float elmt(int m, int n) {
 		return this.mTab[m-1][n-1];
 	}
+	/* Untuk mengakses elemen baris ke m dan kolom ke n
+	cukup masukkan nilai m dan n saja tanpa perlu dikurangi satu
+	Contoh:
+	Matriks
+	1 4 5 6
+	3 6 2 0
+	10 9 3 7
+	Maka 
+	elmt(3,1) = 10
+	elmt(0,0) tidak valid 
+	*/
 
 	public int getRow() {
 		return this.row;
@@ -33,6 +44,7 @@ public class Matrix {
 		this.column = n;
 	}
 
+	/* Input/Output */
 	public void readMatrix() {
 		Scanner input = new Scanner(System.in);
 		setSize();
