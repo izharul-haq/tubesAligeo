@@ -135,6 +135,7 @@ public class Matrix {
 
 	public void transpose() {
 		float[][] temp = new float[getColumn()][getRow()];
+		int tempInt;
 
 		for(int i=0; i<getColumn(); i++) {
 			for(int j=0; j<getRow(); j++) {
@@ -142,8 +143,13 @@ public class Matrix {
 			}
 		}
 
+		tempInt = getRow();
+
 		setRow(getColumn());
-		setColumn(getRow());
+		setColumn(tempInt);
+
+		System.out.println(getRow());
+		System.out.println(getColumn());
 
 		for(int i=0; i<getRow(); i++) {
 			for(int j=0; j<getColumn();j++) {
