@@ -12,6 +12,23 @@ public class Matrix {
 		this.mTab = new float[maxSize][maxSize];
 	}
 
+	public void setSize() {
+		int m, n;
+		Scanner input = new Scanner(System.in);
+		m = input.nextInt();
+		n = input.nextInt();
+		this.row = m;
+		this.column = n;
+	}
+
+	public void setRow(int n) {
+		this.row = n;
+	}
+
+	public void setColumn(int n) {
+		this.column = n;
+	}
+
 	/* Selektor */
 	public float elmt(int m, int n) {
 		return this.mTab[m-1][n-1];
@@ -45,15 +62,6 @@ public class Matrix {
 	}
 	/* m = {m | 1 <= m <= getRow(), m bilangan bulat}
 	untuk akses baris pertama gunakan entireRow(1) */
-
-	public void setSize() {
-		int m, n;
-		Scanner input = new Scanner(System.in);
-		m = input.nextInt();
-		n = input.nextInt();
-		this.row = m;
-		this.column = n;
-	}
 
 	/* Prosedur Input */
 	public void readMatrix() {
@@ -124,6 +132,26 @@ public class Matrix {
 	}
 	/* Operasi Pengurangan setiap Elemen pada baris ke-x dengan setiap
 	Elemen pada baris ke-y */
+
+	public void transpose() {
+		float[][] temp = new float[getColumn()][getRow()];
+
+		for(int i=0; i<getColumn(); i++) {
+			for(int j=0; j<getRow(); j++) {
+				temp[i][j] = this.mTab[j][i];
+			}
+		}
+
+		setRow(getColumn());
+		setColumn(getRow());
+
+		for(int i=0; i<getRow(); i++) {
+			for(int j=0; j<getColumn();j++) {
+				this.mTab[i][j] = temp[i][j];
+			}
+		}
+	}
+	/* Transpos matriks A mxn menjadi A nxm */
 
 	/* Input dan Output */
  	/* Belum selesai untuk read file */
