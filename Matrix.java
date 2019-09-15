@@ -126,7 +126,7 @@ public class Matrix {
 	Elemen pada baris ke-y */
 
 	/* Input dan Output */
-
+ 	/* Belum selesai untuk read file */
 	/*
 	public void filereadMatrix() {
 		File fileInput = new File("in.txt");
