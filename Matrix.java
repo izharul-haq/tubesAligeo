@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Matrix {
-	private int[][] mTab;
+	private float[][] mTab;
 	private int row;
 	private int column;
 	public static final int maxSize = 100;
@@ -9,10 +9,10 @@ public class Matrix {
 	public Matrix (int m, int n) {
 		this.row = m;
 		this.column = n;
-		this.mTab = new int[maxSize][maxSize];
+		this.mTab = new float[maxSize][maxSize];
 	}
 
-	public int elmt(int m, int n) {
+	public float elmt(int m, int n) {
 		return this.mTab[m-1][n-1];
 	}
 
@@ -40,7 +40,7 @@ public class Matrix {
 		int n = getColumn();
 		for(int i=0; i<m; i++) {
 			for(int j=0; j<n; j++) {
-				this.mTab[i][j] = input.nextInt();
+				this.mTab[i][j] = input.nextFloat();
 			}
 		}
 	}
