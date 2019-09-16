@@ -1,5 +1,6 @@
 import java.util.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class Matrix {
 	private float[][] mTab;
@@ -20,6 +21,7 @@ public class Matrix {
 		this.row = m;
 		this.column = n;
 	}
+	/* Set ukuran Matrix dari masukan pengguna */
 
 	public void setRow(int n) {
 		this.row = n;
@@ -62,19 +64,6 @@ public class Matrix {
 	}
 	/* m = {m | 1 <= m <= getRow(), m bilangan bulat}
 	untuk akses baris pertama gunakan entireRow(1) */
-
-	/* Prosedur Input */
-	public void readMatrix() {
-		Scanner input = new Scanner(System.in);
-		setSize();
-		int m = getRow();
-		int n = getColumn();
-		for(int i=0; i<m; i++) {
-			for(int j=0; j<n; j++) {
-				this.mTab[i][j] = input.nextFloat();
-			}
-		}
-	}
 
 	/* Operasi Baris Elementer */
 	public void swapRow(int x, int y) {
@@ -160,22 +149,88 @@ public class Matrix {
 	/* Transpos matriks A mxn menjadi A nxm */
 
 	/* Input dan Output */
- 	/* Belum selesai untuk read file */
-	/*
-	public void filereadMatrix() {
-		File fileInput = new File("in.txt");
-		Scanner fileInput = new Scanner(fileInput)
 
-	}*/
+	/* Prosedur Input */
+	public void readMatrix() {
+		Scanner input = new Scanner(System.in);
+		setSize();
+		for(int i=0; i<getRow(); i++) {
+			for(int j=0; j<getColumn(); j++) {
+				this.mTab[i][j] = input.nextFloat();
+			}
+		}
+	}
+	
+	public void filereadMatrix() {
+		try {
+			setRow(countFileRow());
+			setColumn(countFileColumn());
+
+			File input = new File("in.txt");
+			Scanner fileInput = new Scanner(input);
+
+			for(int i=0; i<getRow(); i++) {
+				for(int j=0; j<getColumn(); j++) {
+					this.mTab[i][j] = fileInput.nextFloat();
+				}
+			}
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("no such file");
+		}
+	}
+	/* Membaca input dari file.txt */
+
+		
+
+	public int countFileRow() {
+		int row;
+		row = 0;
+		try {
+			File input = new File("in.txt");
+			Scanner fileInput = new Scanner(input);
+
+			while(fileInput.hasNextLine()) {
+				row++;
+				fileInput.nextLine();
+			}
+
+			return row;
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("no such file");
+			return 0;
+		}
+	}
+	/* Hitung baris dalam File */
+
+	public int countFileColumn() {
+		int nbElmt, column;
+		try {
+			nbElmt = 0;
+			File input = new File("in.txt");
+			Scanner fileInput = new Scanner(input);
+
+			while(fileInput.hasNextFloat()) {
+				nbElmt++;
+				fileInput.nextFloat();
+			}
+
+			column = nbElmt/ countFileRow();
+			return column;
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("no such file");
+			return 0;
+		}
+	}
 
 	public void printMatrix() {
-		int m = getRow();
-		int n = getColumn();
 		System.out.println();
-		for(int i=0; i<m; i++) {
-			for(int j=0; j<n; j++) {
-				System.out.print(elmt(i+1,j+1) + " ");
-				if(j==n-1) {
+		for(int i=0; i<getRow(); i++) {
+			for(int j=0; j<getColumn(); j++) {
+				System.out.print(elmt(i+1,j+1) + "  ");
+				if(j==getColumn()-1) {
 					System.out.println();
 				}
 			}
