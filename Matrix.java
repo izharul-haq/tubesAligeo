@@ -35,6 +35,7 @@ public class Matrix {
 		this.row = n;
 		this.column = n;
 	}
+	/* Set ukuran Matrix persegi dari masukan pengguna */
 	
 	public void setRow(int n) {
 		this.row = n;
