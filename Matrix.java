@@ -13,6 +13,11 @@ public class Matrix {
 		this.mTab = new float[maxSize][maxSize];
 	}
 
+	public void floatToMatrix(int m, int n, float f) {
+		this.mTab[m-1][n-1] = f;
+	}
+	/* Mengisi Matriks baris ke-m dan baris ke-n dengan nilai f */
+
 	public void setSize() {
 		int m, n;
 		Scanner input = new Scanner(System.in);
@@ -148,7 +153,44 @@ public class Matrix {
 	}
 	/* Transpos matriks A mxn menjadi A nxm */
 
-	/* Input dan Output */
+	/* ELIMINASI GAUSS */
+	public void gaussElimination() {
+		for(int i=1; i<= getRow(); i++) {
+			/* cek apakah elmt(i,i) nol. jika iya maka akan dilakukan penukaran barisan */
+			int k = i+1;
+			while(elmt(i,i)==0 && k<= getRow()){ 
+				swapRow(i, k);
+				k++;
+			}
+			/* buat elmt(i,i) menjadi leading 1 dari row ke-i */
+			divideRow(i, elmt(i,i));
+
+			for(int j=i+1; j<= getRow(); j++) {
+				float temp = elmt(j,i);
+				multiplyRow(i, temp);
+				substractRows(j, i); 
+				divideRow(i, temp);
+			}
+		}
+	}
+	/* Eliminasi dengan asumsi tidak ada satu kolom pun yang berisi angka nol semua */
+	/* I.S. Matriks M, F.S. Matriks M menjadi Echelon */
+	
+	/* ELIMINASI JORDAN */
+	public void jordanElimination() {
+		gaussElimination();
+		for(int i=2; i<= getColumn()-1; i++) { // kolom terakhir tidak diproses karena berisi b
+			for(int j=1; j< i; j++) {
+				float temp = elmt(j,i);
+				multiplyRow(i, temp);
+				substractRows(j, i);
+				divideRow(i, temp);
+			}
+		}
+	}
+	/* F.S. REF */
+
+	/* INPUT DAN OUTPUT */
 
 	/* Prosedur Input */
 	public void readMatrix() {
@@ -224,16 +266,42 @@ public class Matrix {
 			return 0;
 		}
 	}
+	/* Hitung jumlah kolom dalam file */
 
 	public void printMatrix() {
 		System.out.println();
 		for(int i=0; i<getRow(); i++) {
 			for(int j=0; j<getColumn(); j++) {
-				System.out.print(elmt(i+1,j+1) + "  ");
+				System.out.print(elmt(i+1,j+1));
 				if(j==getColumn()-1) {
 					System.out.println();
+				} else {
+					System.out.print("  ");
 				}
 			}
 		}  
 	}
+
+/*
+	public void fileprintMatrix() {
+		//Input nama file
+
+		//cetak ke file
+		File output = new File(fileName);
+
+
+		}
+	public void makefileOutput() {
+		System.out.print("Simpan file sebagai (<nama>.txt): ");
+		String fileName;
+		Scanner input = new Scanner(System.in);
+		fileName = input.nextLine();
+
+		PrintStream outputFile = new PrintStream(new FileOutputStream(fileName));
+	}
+
+	public String outputFileName() {
+		
+	}
+	*/
 }
