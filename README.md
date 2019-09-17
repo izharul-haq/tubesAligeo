@@ -17,9 +17,15 @@ tab.multiplyRow(int n, float num) // kali baris ke n dengan num, ada juga tab.di
 tab.addRows(int x, int y) // tambahkan dua baris x dan y. untuk kurang bisa pakai substractRows()
 tab.transpose() // transpos matriks tab
 
+// Gauss dan Jordan
+tab.gaussElimination()
+tab.jordanElimination
+// Menghasilkan Echelon form/ REF. Masih butuh pengembangan untuk elemen 0.
+
 // I/O
 tab.readMatrix() // baca matriks tab dari masukan pengguna melalui command-line
 tab.filereadMatrix() //baca matriks tab dari file berformat .txt
 tab.printMatrix() //cetak matriks tab ke layar
+
 
 untuk mencetak ke file masih dalam proses...
