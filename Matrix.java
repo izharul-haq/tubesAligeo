@@ -28,6 +28,14 @@ public class Matrix {
 	}
 	/* Set ukuran Matrix dari masukan pengguna */
 
+	public void setSquare() {
+		int n;
+		Scanner input = new Scanner(System.in);
+		n = input.nextInt();
+		this.row = n;
+		this.column = n;
+	}
+	
 	public void setRow(int n) {
 		this.row = n;
 	}
