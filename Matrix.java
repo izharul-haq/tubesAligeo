@@ -176,9 +176,11 @@ public class Matrix {
 
 			for(int j=i+1; j<= getRow(); j++) {
 				float temp = elmt(j,i);
-				multiplyRow(i, temp);
-				substractRows(j, i); 
-				divideRow(i, temp);
+				if(temp != 0) {
+					multiplyRow(i, temp);
+					substractRows(j, i); 
+					divideRow(i, temp);
+				}
 			}
 		}
 	}
@@ -191,9 +193,11 @@ public class Matrix {
 		for(int i=2; i<= getColumn()-1; i++) { // kolom terakhir tidak diproses karena berisi b
 			for(int j=1; j< i; j++) {
 				float temp = elmt(j,i);
-				multiplyRow(i, temp);
-				substractRows(j, i);
-				divideRow(i, temp);
+				if(temp != 0) {
+					multiplyRow(i, temp);
+					substractRows(j, i);
+					divideRow(i, temp);
+				}
 			}
 		}
 	}
