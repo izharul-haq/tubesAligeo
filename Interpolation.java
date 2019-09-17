@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 public class Interpolation {
 
@@ -7,12 +8,14 @@ public class Interpolation {
 	private Point[] ptArray;
 	private int eff;
 	private Matrix solveIntrp;
+	private float xIntrp;
 
 	public Interpolation() {
 		this.eff = 0;
 		this.ptIntrp = new Point(0, 0);
 		this.ptArray = new Point[maxSize];
 		this.solveIntrp = new Matrix();
+		this.xIntrp = 0;
 	}
 
 	public Point getIntrPoint() {
@@ -35,6 +38,10 @@ public class Interpolation {
 		return this.solveIntrp;
 	}
 
+	public float interpolateX() {
+		return this.xIntrp;
+	}
+
 	public void readIntrp() {
 		System.out.print("Masukkan jumlah titik yang akan diinterpolasi: ");
 		Scanner input = new Scanner(System.in);
@@ -48,22 +55,34 @@ public class Interpolation {
 			this.ptIntrp.readPoint();
 			this.ptArray[i-1] = new Point(ptIntrp.abscissa(), ptIntrp.ordinate());
 		}
+		System.out.print("Masukkan nilai yang akan ditaksir: ");
+		this.xIntrp = input.nextFloat();
 		System.out.println();
 	}
 
-	/*public void filereadIntrp() {
+	public void filereadIntrp() {
 		try {
+			int i=0;
 			File input = new File("intrp.txt");
 			Scanner fileInput = new Scanner(input);
+			Scanner inputFloat = new Scanner(System.in);
 
 			while(fileInput.hasNextFloat()) {
-
+				float abscissa, ordinate;
+				abscissa = fileInput.nextFloat();
+				ordinate = fileInput.nextFloat();
+				this.ptArray[i] = new Point(abscissa, ordinate);
+				i++;
+				this.eff++;
 			}
+			System.out.print("Masukkan nilai yang akan ditaksir: ");
+			this.xIntrp = inputFloat.nextFloat();
+			System.out.println();
 		}
 		catch (FileNotFoundException e) {
 			System.out.println("no such file");
 		}
-	}*/
+	}
 
 	public void interpolatePoints() {
 		int row, column;
@@ -137,8 +156,20 @@ public class Interpolation {
 			}
 			} 
 		}
-
 		System.out.println();
+		System.out.print("f(");
+		System.out.print(interpolateX());
+		System.out.print(") = ");
+		System.out.println(fX(interpolateX()));
+	}
 
+	public float fX(float x) {
+		float result = 0;
+		int column = getMatrix().getColumn();
+		int row = getMatrix().getRow();
+		for (int i=1; i<= row; i++) {
+			result += getMatrix().elmt(i, column)*power(x, row-i);
+		}
+		return result;
 	}
 }
