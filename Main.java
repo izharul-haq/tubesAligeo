@@ -47,11 +47,23 @@ public class Main {
     			op = input.nextInt();
 
 	    	} else if(in==3) {
+	    		for(int i=0; i<40;i++) {
+    				write("_");
+   				}
+	    		write("\n");
+	    		writeln("Silahkan pilih metode pencarian matriks invers:");
+	    		writeln("1. Eliminasi Gauss-Jordan");
+	    		writeln("2. Melalui matriks adjoin");
 
 	    	} else if(in==4) {
-
+	    		for(int i=0; i<40;i++) {
+    				write("_");
+   				}
+   				
 	    	} else if(in==5) {
-
+	    		for(int i=0; i<40;i++) {
+    				write("_");
+   				}
 	    	} else if(in==6) {
 	    		do {
     					for(int i=0; i<40;i++) {
