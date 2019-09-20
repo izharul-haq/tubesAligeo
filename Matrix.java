@@ -1,3 +1,8 @@
+/* Author : M. Mirza Fathan Al Arsyad
+   Informatics Engineering of ITB - 13518111
+   Linear Algebra */
+
+
 import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;

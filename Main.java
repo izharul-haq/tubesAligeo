@@ -5,8 +5,8 @@ public class Main {
 		Scanner input = new Scanner(System.in);
 		int in;
 		do {
-			int op;
-			for(int i=0; i<40;i++) {
+			int op, op1;
+			for(int i=0; i<60;i++) {
     			write("_");
    			}
    			write("\n");
@@ -22,20 +22,73 @@ public class Main {
     		in = input.nextInt();
 
 	    	if(in==1) {
-	    		for(int i=0; i<40;i++) {
-    				write("_");
-   				}
-   				write("\n");
-	    		writeln("Silahkan pilih metode penyelesaian sistem persamaan linear:");
-    			writeln("1. Eliminasi Gauss");
-    			writeln("2. Eliminasi Gauss-Jordan");
-   				writeln("3. Metode Cramer");
-  				writeln("4. Matriks invers");
-    			writeln("5. Kembali ke menu sebelumnya");
-  				write("Pilih 1-5: ");
-    			op = input.nextInt();
+	    		do {
+	    			for(int i=0; i<60;i++) {
+    					write("_");
+   					}
+  	 				write("\n");
+		    		writeln("Silahkan pilih metode penyelesaian sistem persamaan linear:");
+    				writeln("1. Eliminasi Gauss");
+    				writeln("2. Eliminasi Gauss-Jordan");
+	   				writeln("3. Metode Cramer");
+  					writeln("4. Matriks invers");
+    				writeln("5. Kembali ke menu sebelumnya");
+  					write("Pilih 1-5: ");
+    				op = input.nextInt();
+
+	    			switch(op) {
+    					case 1:
+
+    						break;
+    					case 2:
+
+    						break;
+    					case 3:
+    						do {
+	    						for(int i=0; i<60;i++) {
+    								write("_");
+			   					}
+	  		 					write("\n");
+				    			writeln("Silahkan pilih metode input SPL:");
+    							writeln("1. Input dari Layar");
+    							writeln("2. Input dari file");
+	   							writeln("3. Kembali ke menu sebelumnya");
+  								write("Pilih 1-3: ");
+    							op1 = input.nextInt();
+    							CramerMatrix cTab;
+    							cTab = new CramerMatrix();
+    							switch(op1) {
+    								case 1:
+    									cTab.readCramer();
+    									cTab.cramer();
+    									cTab.printCramer();
+    									break;
+    								case 2:
+    									cTab.filereadCramer();
+    									cTab.cramer();
+    									cTab.printCramer();
+    									break;
+    								case 3:
+    									break;
+    								default:
+    									writeln("Pilihan anda tidak valid. Silahkan coba lagi.");
+    									break;
+    							}
+    						} while(op1!=3);
+    						break;
+    					case 4:
+
+    						break;
+    					case 5:
+
+    						break;
+    					default:
+    						writeln("Pilihan tidak valid, silhkan diulang.");
+    						break;
+    					}
+	    		} while(op!=5);
 	    	} else if(in==2) {
-	    		for(int i=0; i<40;i++) {
+	    		for(int i=0; i<60;i++) {
     				write("_");
    				}
    				write("\n");
@@ -47,7 +100,7 @@ public class Main {
     			op = input.nextInt();
 
 	    	} else if(in==3) {
-	    		for(int i=0; i<40;i++) {
+	    		for(int i=0; i<60;i++) {
     				write("_");
    				}
 	    		write("\n");
@@ -56,17 +109,17 @@ public class Main {
 	    		writeln("2. Melalui matriks adjoin");
 
 	    	} else if(in==4) {
-	    		for(int i=0; i<40;i++) {
+	    		for(int i=0; i<60;i++) {
     				write("_");
    				}
-   				
+
 	    	} else if(in==5) {
-	    		for(int i=0; i<40;i++) {
+	    		for(int i=0; i<60;i++) {
     				write("_");
    				}
 	    	} else if(in==6) {
 	    		do {
-    					for(int i=0; i<40;i++) {
+    					for(int i=0; i<60;i++) {
     						write("_");
     					}
     					writeln("");
@@ -79,7 +132,6 @@ public class Main {
     					Interpolation intrp = new Interpolation();
     					switch(op) {
     						case 1:
-
     							intrp.readIntrp();
     							intrp.interpolatePoints();
     							intrp.printIntrp();

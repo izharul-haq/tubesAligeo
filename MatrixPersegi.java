@@ -4,12 +4,12 @@ import java.io.FileNotFoundException;
 
 public class MatrixPersegi
 {
-	public float[][] mTab;
+	private float[][] mTab;
 	private int size;
 	private int nSwap;
-	public static final int maxSize = 100;
+	private static final int maxSize = 100;
 
-	private float pow(float a, float b)
+	public float pow(float a, float b)
 	{
 		if (b == 0)
 		{
@@ -32,7 +32,11 @@ public class MatrixPersegi
 			this.mTab = new float[maxSize][maxSize];
 	}
 
-	private void setSquare()
+	public void floatToMatrix(int m, int n, float f) {
+		this.mTab[m-1][n-1] = f;
+	}
+	
+	public void setSquare()
 	/* Menerima masukan ukuran matriks persegi dari pengguna */
 	{
 		// KAMUS LOKAL
@@ -44,7 +48,7 @@ public class MatrixPersegi
 			this.size = n;
 	}
 
-	private void setSize(int n)
+	public void setSize(int n)
 	/* Set nilai baris */
 	{
 		// KAMUS LOKAL
@@ -54,6 +58,10 @@ public class MatrixPersegi
 	}
 
 	/* SELEKTOR */
+	public float elmtP (int m, int n) {
+		return this.mTab[m-1][n-1];
+	}
+
 	public float elmt(float[][] M, int m, int n)
 	/* Untuk mengakses elemen baris ke m dan kolom ke n
 	cukup masukkan nilai m dan n saja tanpa perlu dikurangi satu
@@ -72,7 +80,12 @@ public class MatrixPersegi
 			return M[m-1][n-1];
 	}
 
-	private int getSize()
+	public float[][] getTab() {
+		return this.mTab;
+	}
+
+
+	public int getSize()
 	/* Mengakses nilai baris */
 	{
 		// KAMUS LOKAL
@@ -81,7 +94,7 @@ public class MatrixPersegi
 			return this.size;
 	}
 
-	private float[] entireRow(float[][] M, int m)
+	public float[] entireRow(float[][] M, int m)
 	/* m = {m | 1 <= m <= getSize(), m bilangan bulat}
 	untuk akses baris pertama gunakan entireRow(1) */
 	{
@@ -98,7 +111,24 @@ public class MatrixPersegi
 		return rowKe_m;
 	}
 
-	private void copyMatrix(float[][] M, float[][] N)
+	public float[] entireColumn(float[][] M, int m)
+	/* m = {m | 1 <= m <= getSize(), m bilangan bulat}
+	untuk akses kolom pertama gunakan entireColumn(1) */
+	{
+		// KAMUS LOKAL
+			float[] colKe_m = new float[getSize()];
+			int i;
+
+		// ALGORITMA
+			for (i = 0; i < getSize(); i++)
+			{
+				colKe_m[i] = M[m-1][i];
+			}
+
+		return colKe_m;
+	}
+
+	public void copyMatrix(float[][] M, float[][] N)
 	/* Menyalin elemen dari matriks M ke matriks N */
 	/* I.S. Matriks M berukuran sama dengan matriks N */
 	{
@@ -116,7 +146,7 @@ public class MatrixPersegi
 			}
 	}
 	/* OPERASI BARIS ELEMENTER */
-	private void swapRow(float[][] M, int x, int y)
+	public void swapRow(float[][] M, int x, int y)
 	/* Operasi Menukar baris ke x dengan baris ke y dari mTab */
 	{
 		// KAMUS LOKAL
@@ -135,7 +165,7 @@ public class MatrixPersegi
 			}
 	}
 
-	private void multiplyRow(float[][] M, int m, float num)
+	public void multiplyRow(float[][] M, int m, float num)
 	/* Operasi Perkalian Elemen Baris ke m dengan num  */
 	{
 		// KAMUS LOKAL
@@ -148,7 +178,7 @@ public class MatrixPersegi
 			}
 	}
 
-	private void divideRow(float[][] M, int m, float num)
+	public void divideRow(float[][] M, int m, float num)
 	/* Operasi Pembagian Elemen Baris ke m dengan num */
 	{
 		// KAMUS LOKAL
@@ -161,7 +191,7 @@ public class MatrixPersegi
 			}
 	}
 
-	private void addRows(float[][] M, int x, int y)
+	public void addRows(float[][] M, int x, int y)
 	/* Operasi Pertambahan setiap Elemen pada baris ke-x dengan setiap
 	Elemen pada baris ke-y */
 	{
@@ -180,7 +210,7 @@ public class MatrixPersegi
 			}
 	}
 
-	private void substractRows(float[][] M, int x, int y)
+	public void substractRows(float[][] M, int x, int y)
 	/* Operasi Pengurangan setiap Elemen pada baris ke-x dengan setiap
 	Elemen pada baris ke-y */
 	{
@@ -225,7 +255,7 @@ public class MatrixPersegi
 	}
 
 	/* OPERASI LAINNYA */
-	private void stgAtas(float[][] M)
+	public void stgAtas(float[][] M)
 	/* Menghasilkan matriks segitiga atas dengan OBE */
 	/* I.S. Matriks terdefinisi */
 	/* F.S. Terbentuk matriks segitiga atas */

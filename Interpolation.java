@@ -1,3 +1,9 @@
+/* Author : M. Mirza Fathan Al Arsyad
+   Informatics Engineering of ITB - 13518111
+   Linear Algebra
+
+   Interpolation Class */
+
 import java.util.*;
 import java.io.*;
 
