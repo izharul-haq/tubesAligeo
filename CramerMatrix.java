@@ -28,7 +28,7 @@ public class CramerMatrix {
 	}
 
 	public int getSize() {
-		return this.koefMat.getSize();
+		return this.koefMat.getSize(koefMat.getTab());
 	}
 
 	public void copyMatrix(MatrixPersegi tab) {
@@ -42,9 +42,11 @@ public class CramerMatrix {
 
 	public void readCramer() {
 		Scanner input = new Scanner(System.in);
+		System.out.print("Tentukan banyak SPL: ");
 		int size = input.nextInt();
 		getMatrix().setSize(size);
 
+		System.out.println("Input koefisien-koefisen dan diikuti dengan hasil, dipisahkan dengan spasi:");
 		for(int i=1; i<=getSize(); i++) {
 			for(int j=1; j<=getSize()+1; j++) {
 				if(j==getSize()+1) this.result[i]= input.nextFloat();
@@ -75,8 +77,22 @@ public class CramerMatrix {
 		this.koefMat.printMatrixP(getMatrix().getTab());
 	}
 
+	public void printDet(MatrixPersegi tab) {
+		for(int i=1; i<=tab.getSize(tab.getTab()); i++) {
+			for(int j=1; j<=tab.getSize(tab.getTab()); j++) {
+				System.out.print(tab.elmtP(i,j));
+				if(j!=tab.getSize(tab.getTab())) {
+					System.out.print(" ");
+				} else {
+					System.out.println();
+				}
+			}
+		}
+
+	}
+
 	public void jthColumnToRes(MatrixPersegi mat, int j, float[] tab) {
-		for(int i=1; i<=getMatrix().getSize(); i++) {
+		for(int i=1; i<=getSize(); i++) {
 			mat.floatToMatrix(i, j, tab[i]);
 		}
 	}
@@ -85,15 +101,38 @@ public class CramerMatrix {
 		MatrixPersegi temp = new MatrixPersegi();
 		temp.setSize(getSize());
 		this.neff = getSize();
+		boolean a = true;
 
 		for(int i=1; i<=this.neff; i++) {
 			copyMatrix(temp);
 			jthColumnToRes(temp, i, this.result);
-			this.solution[i] = temp.determinan(temp.getTab())/getMatrix().determinan(getMatrix().getTab());
+			System.out.println();
+			System.out.print("x");
+			System.out.print(i);
+			System.out.println(" adalah pembagian antara determinan matriks:");
+			printDet(temp);
+			System.out.print("yang bernilai: ");
+			System.out.println(temp.determinan(temp.getTab()));
+			System.out.println("dengan determinan matriks:");
+			printDet(getMatrix());
+			System.out.print("yang bernilai: ");
+			System.out.println(getMatrix().determinan(getMatrix().getTab()));
+
+			if(getMatrix().determinan(getMatrix().getTab())<= 0.0000000001 && getMatrix().determinan(getMatrix().getTab()) >= -0.0000000001) {
+				System.out.println("Dikarenakan determinan matriks koefisien bernilai nol");
+				System.out.println("solusi untuk SPL ini tidak bisa diselesaikan dengan kaidah cramer.");
+				a= false;
+			} else {
+				this.solution[i] = temp.determinan(temp.getTab())/getMatrix().determinan(getMatrix().getTab());
+
+			}
 		}
+		if(a) printCramer();
 	}
 
 	public void printCramer() {
+		System.out.println();
+		System.out.println("Maka, solusinya adalah:");
 		for(int i=1; i<=this.neff; i++) {
 			System.out.print("x");
 			System.out.print(i);

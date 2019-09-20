@@ -6,7 +6,7 @@ public class Main {
 		int in;
 		do {
 			int op, op1;
-			for(int i=0; i<60;i++) {
+			for(int i=0; i<120;i++) {
     			write("_");
    			}
    			write("\n");
@@ -23,7 +23,7 @@ public class Main {
 
 	    	if(in==1) {
 	    		do {
-	    			for(int i=0; i<60;i++) {
+	    			for(int i=0; i<120;i++) {
     					write("_");
    					}
   	 				write("\n");
@@ -45,7 +45,7 @@ public class Main {
     						break;
     					case 3:
     						do {
-	    						for(int i=0; i<60;i++) {
+	    						for(int i=0; i<120;i++) {
     								write("_");
 			   					}
 	  		 					write("\n");
@@ -61,12 +61,10 @@ public class Main {
     								case 1:
     									cTab.readCramer();
     									cTab.cramer();
-    									cTab.printCramer();
     									break;
     								case 2:
     									cTab.filereadCramer();
     									cTab.cramer();
-    									cTab.printCramer();
     									break;
     								case 3:
     									break;
@@ -88,7 +86,7 @@ public class Main {
     					}
 	    		} while(op!=5);
 	    	} else if(in==2) {
-	    		for(int i=0; i<60;i++) {
+	    		for(int i=0; i<120;i++) {
     				write("_");
    				}
    				write("\n");
@@ -100,7 +98,7 @@ public class Main {
     			op = input.nextInt();
 
 	    	} else if(in==3) {
-	    		for(int i=0; i<60;i++) {
+	    		for(int i=0; i<120;i++) {
     				write("_");
    				}
 	    		write("\n");
@@ -109,17 +107,17 @@ public class Main {
 	    		writeln("2. Melalui matriks adjoin");
 
 	    	} else if(in==4) {
-	    		for(int i=0; i<60;i++) {
+	    		for(int i=0; i<120;i++) {
     				write("_");
    				}
 
 	    	} else if(in==5) {
-	    		for(int i=0; i<60;i++) {
+	    		for(int i=0; i<120;i++) {
     				write("_");
    				}
 	    	} else if(in==6) {
 	    		do {
-    					for(int i=0; i<60;i++) {
+    					for(int i=0; i<120;i++) {
     						write("_");
     					}
     					writeln("");
