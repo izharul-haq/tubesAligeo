@@ -4,40 +4,47 @@ import java.io.FileNotFoundException;
 
 public class MatrixPersegi
 {
-	private float[][] mTab;
-	private int size;
-	private int nSwap;
-	private static final int maxSize = 100;
+	/* ***ATRIBUT GLOBAL*** */
+		public float[][] mTab;
+		private int size;
+		private int nSwap;
+		public static final int maxSize = 100;
 
-	public float pow(float a, float b)
+	/* ***METODE*** */
+	/* FUNGSI MATEMATIKA */
+	private float pow(float a, float b)
+	/* Menghitung hasil dari a pangkat b, b >= 0 */
 	{
-		if (b == 0)
-		{
-			return 1;
-		}
-		else /* b > 0 */
-		{
-			return a * pow(a, b - 1);
-		}
+		// KAMUS LOKAL
+
+		// ALGORITMA
+			if (b == 0)
+			{
+				return 1;
+			}
+			else /* b > 0 */
+			{
+				return a * pow(a, b - 1);
+			}
 	}
 
 	/* KONSTRUKTOR */
 	public MatrixPersegi()
-	/* Inisiasi nilai awal */
+	/* Inisiasi nilai awal membentuk matriks kosong berukuran
+		 maxSize x maxSize */
+	/* I. S. Sembarang */
+	/* F. S. Terbentuk matriks berukuran maxSize x maxSize */
 	{
 		// KAMUS LOKAL
-			int i, j;
 
 		// ALGORITMA
 			this.mTab = new float[maxSize][maxSize];
 	}
 
-	public void floatToMatrix(int m, int n, float f) {
-		this.mTab[m-1][n-1] = f;
-	}
-	
-	public void setSquare()
-	/* Menerima masukan ukuran matriks persegi dari pengguna */
+	private void setSquare()
+	/* Menerima masukan ukuran efektif matriks persegi dari pengguna */
+	/* I. S. Sembarang */
+	/* F. S. Ukuran efektif matriks terdifinisi */
 	{
 		// KAMUS LOKAL
 			int n;
@@ -48,8 +55,10 @@ public class MatrixPersegi
 			this.size = n;
 	}
 
-	public void setSize(int n)
-	/* Set nilai baris */
+	private void setSize(int n)
+	/* Set ukuran efektif matriks */
+	/* I. S. Sembarang */
+	/* F. S. Ukuran efektif matriks terdifinisi */
 	{
 		// KAMUS LOKAL
 
@@ -58,10 +67,6 @@ public class MatrixPersegi
 	}
 
 	/* SELEKTOR */
-	public float elmtP (int m, int n) {
-		return this.mTab[m-1][n-1];
-	}
-
 	public float elmt(float[][] M, int m, int n)
 	/* Untuk mengakses elemen baris ke m dan kolom ke n
 	cukup masukkan nilai m dan n saja tanpa perlu dikurangi satu
@@ -80,30 +85,34 @@ public class MatrixPersegi
 			return M[m-1][n-1];
 	}
 
-	public float[][] getTab() {
-		return this.mTab;
-	}
-
-
-	public int getSize()
-	/* Mengakses nilai baris */
+	public int getSize(float[][] M)
+	/* Mengakses ukuran matriks M. Apabila ukuran */
+	/* matriks > ukuran efektif (size), mengembalikan */
+	/* ukuran efektif (size) */
 	{
 		// KAMUS LOKAL
 
 		// ALGORITMA
-			return this.size;
+			if (M.length <= this.size)
+			{
+				return M.length;
+			}
+			else
+			{
+				return this.size;
+			}
 	}
 
-	public float[] entireRow(float[][] M, int m)
-	/* m = {m | 1 <= m <= getSize(), m bilangan bulat}
-	untuk akses baris pertama gunakan entireRow(1) */
+	private float[] entireRow(float[][] M, int m)
+	/* Mengakses seluruh elemen pada baris ke-m dari */
+	/* matriks M dengan 1 <= m <= getSize(M) */
 	{
 		// KAMUS LOKAL
-			float[] rowKe_m = new float[getSize()];
+			float[] rowKe_m = new float[getSize(M)];
 			int i;
 
 		// ALGORITMA
-			for (i = 0; i < getSize(); i++)
+			for (i = 0; i < getSize(M); i++)
 			{
 				rowKe_m[i] = M[m-1][i];
 			}
@@ -111,121 +120,110 @@ public class MatrixPersegi
 		return rowKe_m;
 	}
 
-	public float[] entireColumn(float[][] M, int m)
-	/* m = {m | 1 <= m <= getSize(), m bilangan bulat}
-	untuk akses kolom pertama gunakan entireColumn(1) */
-	{
-		// KAMUS LOKAL
-			float[] colKe_m = new float[getSize()];
-			int i;
-
-		// ALGORITMA
-			for (i = 0; i < getSize(); i++)
-			{
-				colKe_m[i] = M[m-1][i];
-			}
-
-		return colKe_m;
-	}
-
-	public void copyMatrix(float[][] M, float[][] N)
-	/* Menyalin elemen dari matriks M ke matriks N */
-	/* I.S. Matriks M berukuran sama dengan matriks N */
-	{
-		// KAMUS LOKAL
-			int i, j;
-
-		// ALGORITMA
-			for (i = 0; i < getSize(); i++)
-			{
-				for (j = 0; j < getSize(); j++)
-				{
-					N[i][j] = M[i][j];
-
-				}
-			}
-	}
 	/* OPERASI BARIS ELEMENTER */
-	public void swapRow(float[][] M, int x, int y)
+	private void swapRow(float[][] M, int x, int y)
 	/* Operasi Menukar baris ke x dengan baris ke y dari mTab */
+	/* I. S. Matriks M terdefinisi */
+	/* F. S. Elemen matriks M baris ke-x ditukar dengan elemen */
+	/* 			 matriks M baris ke-y */
 	{
 		// KAMUS LOKAL
-			float[] temp1 = new float[getSize()];
-			float[] temp2 = new float[getSize()];
+			float[] temp1 = new float[getSize(M)];
+			float[] temp2 = new float[getSize(M)];
 			int i;
 
 		// ALGORITMA
 			temp1 = entireRow(M, x);
 			temp2 = entireRow(M, y);
 
-			for(i = 0; i < getSize(); i++)
+			for(i = 0; i < getSize(M); i++)
 			{
 				M[x-1][i] = temp2[i];
 				M[y-1][i] = temp1[i];
 			}
 	}
 
-	public void multiplyRow(float[][] M, int m, float num)
+	private void multiplyRow(float[][] M, int m, float num)
 	/* Operasi Perkalian Elemen Baris ke m dengan num  */
 	{
 		// KAMUS LOKAL
 			int i;
 
 		// ALGORITMA
-			for(i = 0; i < getSize(); i++)
+			for(i = 0; i < getSize(M); i++)
 			{
 				M[m-1][i] *= num;
 			}
 	}
 
-	public void divideRow(float[][] M, int m, float num)
+	private void divideRow(float[][] M, int m, float num)
 	/* Operasi Pembagian Elemen Baris ke m dengan num */
 	{
 		// KAMUS LOKAL
 			int i;
 
 		// ALGORITMA
-			for(i = 0; i < getSize(); i++)
+			for(i = 0; i < getSize(M); i++)
 			{
 				M[m-1][i] /= num;
 			}
 	}
 
-	public void addRows(float[][] M, int x, int y)
+	private void addRows(float[][] M, int x, int y)
 	/* Operasi Pertambahan setiap Elemen pada baris ke-x dengan setiap
 	Elemen pada baris ke-y */
 	{
 		// KAMUS LOKAL
 			int i;
-			float[] temp1 = new float[getSize()];
-			float[] temp2 = new float[getSize()];
+			float[] temp1 = new float[getSize(M)];
+			float[] temp2 = new float[getSize(M)];
 
 		// ALGORITMA
 			temp1 = entireRow(M, x);
 			temp2 = entireRow(M, y);
 
-			for(i = 0; i < getSize(); i++)
+			for(i = 0; i < getSize(M); i++)
 			{
 				M[x-1][i] = temp1[i] + temp2[i];
 			}
 	}
 
-	public void substractRows(float[][] M, int x, int y)
+	private void substractRows(float[][] M, int x, int y)
 	/* Operasi Pengurangan setiap Elemen pada baris ke-x dengan setiap
 	Elemen pada baris ke-y */
 	{
 		// KAMUS LOKAL
 			int i;
-			float[] temp1 = new float[getSize()];
-			float[] temp2 = new float[getSize()];
+			float[] temp1 = new float[getSize(M)];
+			float[] temp2 = new float[getSize(M)];
 
 		// ALGORITMA
 			temp1 = entireRow(M, x);
 			temp2 = entireRow(M, y);
 
-			for(i = 0; i < getSize(); i++)
+			for(i = 0; i < getSize(M); i++)
 			{
 				M[x-1][i] = temp1[i] - temp2[i];
+			}
+	}
+
+	/* OPERASI MATRIKS LAINNYA */
+	private void copyMatrix(float[][] M, float[][] N)
+	/* Menyalin elemen dari matriks M ke matriks N */
+	/* I. S. Matriks M dan N terdefinisi dan berukuran sama */
+	/* F. S. Matriks N memiliki elemen yang sama dengan matriks M */
+	{
+		// KAMUS LOKAL
+			int i, j;
+
+		// ALGORITMA
+			for (i = 0; i < getSize(M); i++)
+			{
+				for (j = 0; j < getSize(M); j++)
+				{
+					N[i][j] = M[i][j];
+
+				}
 			}
 	}
 
@@ -233,28 +231,27 @@ public class MatrixPersegi
 	/* Transpos matriks A m x n menjadi A n x m */
 	{
 		// KAMUS LOKAL
-			float[][] temp = new float[getSize()][getSize()];
+			float[][] temp = new float[getSize(M)][getSize(M)];
 			int i, j;
 
 		// ALGORITMA
-			for(i = 0; i < getSize(); i++)
+			for(i = 0; i < getSize(M); i++)
 			{
-				for(j = 0; j < getSize(); j++)
+				for(j = 0; j < getSize(M); j++)
 				{
 					temp[i][j] = M[j][i];
 				}
 			}
 
-			for(i = 0; i < getSize(); i++)
+			for(i = 0; i < getSize(M); i++)
 			{
-				for(j = 0; j < getSize();j++)
+				for(j = 0; j < getSize(M);j++)
 				{
 					M[i][j] = temp[i][j];
 				}
 			}
 	}
 
-	/* OPERASI LAINNYA */
 	public void stgAtas(float[][] M)
 	/* Menghasilkan matriks segitiga atas dengan OBE */
 	/* I.S. Matriks terdefinisi */
@@ -267,14 +264,14 @@ public class MatrixPersegi
 
 		// ALGORITMA
 			this.nSwap = 0;
-			for(i = 1; i < getSize(); i++)
+			for(i = 1; i < getSize(M); i++)
 			{
 				for(j = 0; j < i; j++)
 				{
 					if (M[j][j] == 0)
 					{
 						k = j + 1;
-						while(M[k][k] == 0 && k < getSize())
+						while(M[k][k] == 0 && k < getSize(M))
 						{
 							k++;
 						}
@@ -289,7 +286,7 @@ public class MatrixPersegi
 					multiplyRow(M, j + 1, konst);
 					substractRows(M, i + 1, j + 1);
 
-					for (k = 0; k < getSize(); k++)
+					for (k = 0; k < getSize(M); k++)
 					{
 						M[j][k] = temp[k];
 					}
@@ -307,18 +304,170 @@ public class MatrixPersegi
 
 		// ALGORITMA
 			d = 1;
-			mTemp = new float[getSize()][getSize()];
+			mTemp = new float[getSize(M)][getSize(M)];
 
-			copyMatrix(this.mTab, mTemp);
+			copyMatrix(M, mTemp);
 
 			stgAtas(mTemp);
 
-			for (i = 0; i < getSize(); i++)
+			for (i = 0; i < getSize(M); i++)
 			{
 				d *= mTemp[i][i];
 			}
 
 			return d * pow(-1, this.nSwap);
+	}
+
+	public float[] elMinor(float[][] M, int i, int j)
+	/* Menyimpan elemen-elemen dari minor matriks ke
+		 dalam suatu array */
+	/* I. S. Matriks terdefinisi dan i, j valid */
+	/* F. S. Elemen-elemen minor tersimpan dalam suatu array*/
+	{
+		// KAMUS LOKAL
+			int k, l, m;
+			float[] minor;
+
+		// ALGORITMA
+			m = 0;
+			k = 0;
+			minor = new float[(getSize(M) - 1) * (getSize(M) - 1)];
+
+			while (k < getSize(M))
+			{
+				l = 0;
+				if (k != i)
+				{
+					while (l < getSize(M))
+					{
+						if (l != j)
+						{
+							minor[m] = M[k][l];
+							m++;
+						}
+
+						l++;
+					}
+				}
+
+				k++;
+			}
+
+			return minor;
+	}
+
+	public float[][] minorMatrix(float[][] M, int i, int j)
+	/* Membentuk matriks minor dari elemen M[i][j] */
+	/* I. S. Matriks terdefinisi dan i, j valid */
+	/* F. S. Terbentuk matriks minor untuk elemen M[i][j] */
+	{
+		// KAMUS LOKAL
+			int k, l, m;
+			float[][] minMat;
+
+		// ALGORITMA
+			m = 0;
+			minMat = new float[getSize(M) - 1][getSize(M) - 1];
+
+			for (k = 0; k < getSize(M) - 1; k++)
+			{
+				for (l = 0; l < getSize(M) - 1; l++)
+				{
+					minMat[k][l] = elMinor(M, i, j)[m];
+					m++;
+				}
+			}
+
+			return minMat;
+	}
+
+	public float[][] kofaktor(float[][] M)
+	/* Membentuk matriks kofaktor dari matriks M */
+	{
+		// KAMUS LOKAL
+			int i, j;
+			float[][] kofMat;
+
+		// ALGORITMA
+
+			kofMat = new float[getSize(M)][getSize(M)];
+
+			for (i = 0; i < getSize(M); i++)
+			{
+				for (j = 0; j < getSize(M); j++)
+				{
+					if ((i + j) % 2 == 0)
+					{
+						kofMat[i][j] = determinan(minorMatrix(M, i, j));
+					}
+					else
+					{
+						kofMat[i][j] = -1 * determinan(minorMatrix(M, i, j));
+					}
+
+				}
+			}
+
+			return kofMat;
+	}
+
+	public float ekspanKof(float[][] M)
+	/* Menghasilkan determinan matriks M dengan */
+	/* metode ekspansi kofaktor */
+	{
+		// KAMUS LOKAL
+			int j;
+			float det;
+
+		// ALGORITMA
+			det = 0;
+
+			for (j = 0; j < getSize(M); j++)
+			{
+				det += M[0][j] * kofaktor(M)[0][j];
+			}
+
+			return det;
+	}
+
+	public float[][] adjoin(float[][] M)
+	/* Menghasilkan adjoin dari matriks M */
+	/* dengan transpose kofaktor matriks M */
+	{
+		// KAMUS LOKAL
+			float[][] adj;
+
+		// ALGORITMA
+			adj = new float[getSize(M)][getSize(M)];
+			copyMatrix(kofaktor(M), adj);
+			transpose(adj);
+
+			return adj;
+	}
+
+	public float[][] invers(float[][] M)
+	/* Menghasilkan invers dari matriks M */
+	/* Prekondisi : det(M) != 0 */
+	{
+		// KAMUS LOKAL
+			int i, j;
+			float det;
+			float[][] inv;
+
+		// ALGORITMA
+			det = determinan(M);
+
+			inv = new float[getSize(M)][getSize(M)];
+
+			for (i = 0; i < getSize(M); i++)
+			{
+				for (j = 0; j < getSize(M); j++)
+				{
+					inv[i][j] = adjoin(M)[i][j] / det;
+				}
+			}
+
+			return inv;
 	}
 
 	/* PROSEDUR INPUT/OUTPUT */
@@ -332,16 +481,16 @@ public class MatrixPersegi
 
 		// ALGORITMA
 			setSquare();
-			for(i = 0; i < getSize(); i++)
+			for(i = 0; i < getSize(M); i++)
 			{
-				for(j = 0; j < getSize(); j++)
+				for(j = 0; j < getSize(M); j++)
 				{
 					M[i][j] = input.nextFloat();
 				}
 			}
 	}
 
-	public void filereadMatrix(float[][] M)
+	public void filereadMatrixP(float[][] M)
 	/* Menerima masukan elemen matriks dari file .txt */
 	{
 		// KAMUS LOKAL
@@ -355,9 +504,9 @@ public class MatrixPersegi
 				File input = new File("in.txt");
 				Scanner fileInput = new Scanner(input);
 
-				for(i = 0; i < getSize(); i++)
+				for(i = 0; i < getSize(M); i++)
 				{
-					for(j = 0; j < getSize(); j++)
+					for(j = 0; j < getSize(M); j++)
 					{
 						M[i][j] = fileInput.nextFloat();
 					}
@@ -404,12 +553,12 @@ public class MatrixPersegi
 
 		// ALGORITMA
 			System.out.println();
-			for(i = 0; i < getSize(); i++)
+			for(i = 0; i < getSize(M); i++)
 			{
-				for(j = 0; j < getSize(); j++)
+				for(j = 0; j < getSize(M); j++)
 				{
 					System.out.print(elmt(M, i + 1, j + 1) + "  ");
-					if(j == getSize()-1)
+					if(j == getSize(M) - 1)
 					{
 						System.out.println();
 					}
