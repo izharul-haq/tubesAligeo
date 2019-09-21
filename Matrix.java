@@ -51,6 +51,10 @@ public class Matrix {
 	}
 
 	/* Selektor */
+	public float[][] getTab() {
+		return this.mTab;
+	}
+
 	public float elmt(int m, int n) {
 		return this.mTab[m-1][n-1];
 	}

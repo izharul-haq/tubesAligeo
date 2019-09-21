@@ -1,3 +1,10 @@
+/*Author of this Class:
+	Muhammad Mirza Fathan Al Arsyad - 13518111
+	Informatics Engineering of ITB
+	Linear Algebra
+
+	Main Program */
+
 import java.util.*;
 
 public class Main {
@@ -75,7 +82,33 @@ public class Main {
     						} while(op1!=3);
     						break;
     					case 4:
-
+    						do {
+	    						for(int i=0; i<120;i++) {
+    								write("_");
+			   					}
+	  		 					write("\n");
+				    			writeln("Silahkan pilih metode input SPL:");
+    							writeln("1. Input dari Layar");
+    							writeln("2. Input dari file");
+	   							writeln("3. Kembali ke menu sebelumnya");
+  								write("Pilih 1-3: ");
+    							op1 = input.nextInt();
+    							InverseLinEq iTab;
+    							iTab = new InverseLinEq();
+    							switch(op1) {
+    								case 1:
+    									iTab.readInverseLinEq();
+    									iTab.solveInverse();
+    									break;
+    								case 2:
+    									break;
+    								case 3:
+    									break;
+    								default:
+    									writeln("Pilihan anda tidak valid. Silahkan coba lagi.");
+    									break;
+    							}
+    						} while(op1!=3);
     						break;
     					case 5:
 
