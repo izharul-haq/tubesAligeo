@@ -285,8 +285,14 @@ public class MatrixPersegi
 						swapRow(M, j + 1, k + 1);
 						this.nSwap += 1;
 					}
-
-					konst = M[i][j] / M[j][j];
+					if (M[j][j] != 0)
+					{
+						konst = M[i][j] / M[j][j];
+					}
+					else
+					{
+						konst = 0;
+					}
 
 					temp = entireRow(M, j + 1);
 
@@ -573,7 +579,7 @@ public class MatrixPersegi
 			}
 	}
 
-	/*Author of subprograms below this comment: 
+	/*Author of subprograms below this comment:
 	Muhammad Mirza Fathan Al Arsyad - 13518111
 	Informatics Engineering of ITB
 	Linear Algebra */
