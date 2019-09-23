@@ -98,7 +98,7 @@ public class Main {
     							switch(op1) {
     								case 1:
     									iTab.readInverseLinEq();
-    									iTab.solveInverse();
+    									iTab.doInverse();
     									break;
     								case 2:
     									break;

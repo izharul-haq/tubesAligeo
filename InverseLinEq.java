@@ -1,118 +1,188 @@
 import java.util.*;
+import java.lang.ArrayIndexOutOfBoundsException;
+import java.lang.Math;
 
 
 /*Author of this Class:
 	Muhammad Mirza Fathan Al Arsyad - 13518111
 	Informatics Engineering of ITB
 	Linear Algebra */
-
+ 
 public class InverseLinEq {
-	private MatrixPersegi koef;
-	private Matrix augMat;
-	private Matrix result;
+
+	private float[][] koef;
+	private float[][] result;
 	private float[] solution;
-	private int neff;
+	private int effKoe;
+	private int effKol;
+	private int effRow;
+	private MatrixPersegi m;
 
 	public InverseLinEq() {
-		this.koef = new MatrixPersegi();
-		this.augMat = new Matrix();
-		this.result = new Matrix();
-		this.solution = new float[101];
-		neff = 0;
+		koef = new float[100][100];
+		result = new float[100][1];
+		solution = new float[100];
+		effKoe = 0;
+		effKol = 0;
+		effRow = 0;
+		m = new MatrixPersegi();
+
 	}
 
-	public MatrixPersegi getKoef() {
-		return this.koef;
+	public void setNeff(int s) {
+		this.effKoe = s;
 	}
 
-	public int getSize() {
-		return this.koef.getSize(getKoef().getTab());
+	public void setKol(int s) {
+		this.effKol = s;
 	}
 
-	public Matrix getAug() {
-		return this.augMat;
+	public void setRow(int s) {
+		this.effRow = s;
 	}
 
-	public Matrix getRes() {
-		return this.result;
+	public float koElmt(int i,int j) {
+		return this.koef[i][j];
 	}
 
-	public void setRes(int i) {
-		getRes().setColumn(1);
-		getRes().setRow(i);
-	}
-
-	public void setSize(int s) {
-		getKoef().setSize(s);
-	}
 	public void readInverseLinEq() {
-		System.out.print("Masukkan jumlah persamaan yang akan diselesaikan: ");
+		System.out.print("Masukkan jumlah persamaan linear: ");
 		Scanner input = new Scanner(System.in);
-		int size = input.nextInt();
-		this.neff = size;
-		setSize(size);
-		setRes(size);
-		System.out.println("Masukkan koefisien persamaan linear diikuti dengan hasil dari setiap persamaan: ");
-		for(int i=1; i<=getSize(); i++) {
-			for(int j=1; j<=getSize(); j++) {
-				if(j!=getSize()) {
-					float f = input.nextFloat();
-					getKoef().floatToMatrix(i,j,f);					
-				} else {
-					float f = input.nextFloat();
-					getRes().floatToMatrix(i,1,f);
-				}
-			}
-		}
-	}
+		setNeff(input.nextInt());
+		System.out.println("Masukkan koefisien-koefisien dalam SPL diikuti dengan hasil");
+		setKol(1);
+		setRow(this.effKoe);
 
-	public float[][] mulMat(float [][] tab1, float[][] tab2) {
-		float[][] tab = new float[getSize()+1][getSize()+1];
-
-		for(int i=1; i<= getSize(); i++) {
-			for(int j= 1; j<= getSize(); j++) {
-				tab[1][1]=0;
+		for (int i=0; i<this.effKoe; i++) {
+			for(int j=0; j<this.effKoe+1; j++) {
+				if(j<this.effKoe) this.koef[i][j] = input.nextFloat();
+				else this.result[i][0] = input.nextFloat();
 			}
 		}
 
-		for(int i= 1; i<= getSize(); i++) {
-			for(int j= 1; j<= getSize(); j++) {
-				for(int k = 1; k<= getSize(); k++) {
-					tab[i][j] += (tab1[i][k] * tab[k][j]);
-				}
-			}
-		}	
-
-		return tab;
 	}
 
-	public void solveInverse() {
-		MatrixPersegi inversed = new MatrixPersegi();
-		inversed.setSize(getSize());
-		float[][] inv = inversed.invers(inversed.getTab());
+	public void doInverse() {
+		float[][] tabInverse = new float[this.effKoe][this.effKoe];
+		float[][] identity = new float[this.effKoe][this.effKoe];
+		m.setSize(this.effKoe);
 
-
-		if(this.koef.determinan(this.koef.getTab())<= 0.000000001 && this.koef.determinan(this.koef.getTab())>= 0.000000001) {
-			System.out.println("Matriks koefisien tidak memiliki invers");
-		} else {
-
-			for(int i=1; i<=getSize(); i++) {
-				for(int j=1; j<=getSize(); j++) {
-					getKoef().floatToMatrix(i,j, inv[i][j]);
+		try {
+			for(int i=0; i<this.effKoe; i++) {
+				for(int j=0; j<this.effKoe; j++) {
+					tabInverse[i][j] = m.invers(this.koef)[i][j];		
+				}
+			}
+			
+			for(int i=0; i<this.effKoe; i++) {
+				for(int j=0; j<this.effKoe; j++) {
+					identity[i][j]=0;
+					solution[i]=0;
 				}
 			}
 
-			float[][] tabKoefRes = mulMat(inversed.getTab(), getKoef().getTab());
-			float[][] tabHasilRes = mulMat(inversed.getTab(), getRes().getTab());
-
-			for(int i=1; i<=getSize(); i++) {
-				result.floatToMatrix(i,1,tabHasilRes[1][i]);
+			for(int i=0; i<this.effKoe; i++) {
+				for(int j=0; j<this.effKoe; j++) {
+					for(int k=0; k<this.effKoe; k++) {
+						identity[i][j] += (tabInverse[i][k] * this.koef[k][j]);
+					}
+				}
 			}
 
-			for(int i=1; i<=getSize(); i++) {
-				System.out.println(result.elmt(1,i));
+			System.out.println();
+			System.out.println("Kalikan matriks koefisien:");
+
+			for(int i=0; i<this.effKoe; i++) {
+				for(int j=0; j<this.effKoe; j++){
+					if(j!= this.effKoe-1) {
+						System.out.print((float)Math.round((this.koef[i][j])*100)/100);
+						System.out.print(" ");
+					} else {
+						System.out.println((float)Math.round((this.koef[i][j])*100)/100);
+					}
+				}
 			}
 
+			System.out.println("dengan matriks inversnya, yaitu:");
+
+			for(int i=0; i<this.effKoe; i++) {
+				for(int j=0; j<this.effKoe; j++){
+					if(j!= this.effKoe-1) {
+						System.out.print((float)Math.round((tabInverse[i][j])*100)/100);
+						System.out.print(" ");
+					} else {
+						System.out.println((float)Math.round((tabInverse[i][j])*100)/100);
+					}
+				}
+			}
+
+			System.out.println();
+			System.out.println("Juga kalikan matriks hasil:");
+
+			for(int i=0; i<this.effRow; i++) {
+				for(int j=0; j<this.effKol; j++) {
+					if(j!= this.effKol-1) {
+						System.out.print((float)Math.round((this.result[i][j])*100)/100);
+						System.out.print(" ");
+					} else {
+						System.out.println((float)Math.round((this.result[i][j])*100)/100);
+					}
+				}
+			}
+
+			System.out.println("dengan invers dari matriks koefisien:");
+
+			for(int i=0; i<this.effKoe; i++) {
+				for(int j=0; j<this.effKoe; j++){
+					tabInverse[i][j] = m.invers(this.koef)[i][j];
+					if(j!= this.effKoe-1) {
+						System.out.print((float)Math.round((tabInverse[i][j])*100)/100);
+						System.out.print(" ");
+					} else {
+						System.out.println((float)Math.round((tabInverse[i][j])*100)/100);
+					}
+				}
+			}
+
+			System.out.println();
+			System.out.println("setelah matriks hasil dan koefisien yang sudah dikalikan dengan matriks invers dari koefisien digabungkan menjadi bentuk augmented matrix, akan menghasilkan:");
+
+			for(int i=0; i<this.effKoe; i++) {
+				for(int j=0; j<this.effKol; j++) {
+					for(int k=0; k<this.effRow; k++) {
+						this.solution[i] += (tabInverse[i][k] * this.result[k][j]);
+					}
+				}
+			}
+
+			for(int i=0; i<this.effKoe; i++) {
+				for(int j=0; j<this.effKoe+1; j++) {
+					if(j< this.effKoe) {
+						System.out.print((float)Math.round((identity[i][j])*100)/100);
+						System.out.print(" ");
+					} else {
+						System.out.println((float)Math.round((solution[i])*100)/100);
+					}
+				}
+			}
+
+			System.out.println();
+			System.out.println("Maka bisa disimpulkan, solusinya adalah: ");
+
+			for(int i=0; i<this.effKoe; i++) {
+				System.out.print("x");
+				System.out.print(i+1);
+				System.out.print(" = ");
+				System.out.print((float)Math.round((solution[i])*100)/100);
+				if(i==this.effKoe-1) System.out.println();
+				else System.out.print(", ");
+			}
+
+		}
+
+
+		catch (java.lang.ArrayIndexOutOfBoundsException e) {
+			System.out.println("Invalid index");
 		}
 	}
 }
