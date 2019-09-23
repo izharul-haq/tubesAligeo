@@ -13,11 +13,19 @@ public class Main {
 		int in;
 		do {
 			int op, op1;
+			MatrixPersegi tab = new MatrixPersegi();
+    		CramerMatrix cTab = new CramerMatrix();
+			InverseLinEq iTab = new InverseLinEq();
+			
 			for(int i=0; i<120;i++) {
     			write("_");
    			}
    			write("\n");
 			writeln("MENU");
+			for(int i=0; i<120;i++) {
+    			write("_");
+   			}
+   			write("\n");
     		writeln("1. Sistem persamaan linear");
  		   	writeln("2. Hitung determinan matriks")  ;
 	    	writeln("3. Matriks invers");
@@ -62,8 +70,6 @@ public class Main {
 	   							writeln("3. Kembali ke menu sebelumnya");
   								write("Pilih 1-3: ");
     							op1 = input.nextInt();
-    							CramerMatrix cTab;
-    							cTab = new CramerMatrix();
     							switch(op1) {
     								case 1:
     									cTab.readCramer();
@@ -93,8 +99,6 @@ public class Main {
 	   							writeln("3. Kembali ke menu sebelumnya");
   								write("Pilih 1-3: ");
     							op1 = input.nextInt();
-    							InverseLinEq iTab;
-    							iTab = new InverseLinEq();
     							switch(op1) {
     								case 1:
     									iTab.readInverseLinEq();
@@ -119,35 +123,207 @@ public class Main {
     					}
 	    		} while(op!=5);
 	    	} else if(in==2) {
-	    		for(int i=0; i<120;i++) {
-    				write("_");
-   				}
-   				write("\n");
-	    		writeln("Silahkan pilih metode pencarian determinan:");
-    			writeln("1. Operasi Baris Elementer");
-    			writeln("2. Ekspansi kofaktor");
-   				writeln("3. Kembali ke menu sebelumnya");
-  				write("Pilih 1-3: ");
-    			op = input.nextInt();
+	    		do {
+	    			for(int i=0; i<120;i++) {
+    					write("_");
+   					}
+   					write("\n");
+		    		writeln("Silahkan pilih metode pencarian determinan:");
+    				writeln("1. Operasi Baris Elementer");
+    				writeln("2. Ekspansi kofaktor");
+   					writeln("3. Kembali ke menu sebelumnya");
+  					write("Pilih 1-3: ");
+    				op = input.nextInt();
+
+    				switch(op) {
+    					case 1:
+    						do{
+    							write("\n");
+    							writeln("Silahkan pilih metode input matriks");
+    							writeln("1. Input dari layar");
+    							writeln("2. Input dari file");
+    							writeln("3. Kembali ke menu sebelumhya");
+    							write("Pilih 1-3: ");
+    							op1 = input.nextInt();
+
+    							switch(op1) {
+    								case 1:
+    									tab.readMatrixP(tab.getTab());
+    									tab.determinanPrint(tab.getTab());
+    									break;
+    								case 2:
+    									tab.filereadMatrixP(tab.getTab());
+    									tab.determinanPrint(tab.getTab());
+    									break;
+    								case 3:
+    									break;
+    								default:
+    									writeln("Pilihan anda tidak valid");
+    									break;
+    							}
+    						} while(op1!=3);
+    						break;
+    					case 2:
+    						do{
+    							write("\n");
+    							writeln("Silahkan pilih metode input matriks");
+    							writeln("1. Input dari layar");
+    							writeln("2. Input dari file");
+    							writeln("3. Kembali ke menu sebelumhya");
+    							write("Pilih 1-3: ");
+    							op1 = input.nextInt();
+
+    							switch(op1) {
+    								case 1:
+    									tab.readMatrixP(tab.getTab());
+    									tab.ekspanKofPrint(tab.getTab());
+    									break;
+    								case 2:
+    									tab.filereadMatrixP(tab.getTab());
+    									tab.ekspanKofPrint(tab.getTab());
+    									break;
+    								case 3:
+    									break;
+    								default:
+    									writeln("Pilihan anda tidak valid.");
+    									break;
+    							}
+    						} while(op1!=3);
+    						break;
+    					case 3:
+    						break;
+    					default:
+    						writeln("Pilihan anda tidak valid");
+    						break;
+    				}
+	    		} while(op!=3);
 
 	    	} else if(in==3) {
-	    		for(int i=0; i<120;i++) {
-    				write("_");
-   				}
-	    		write("\n");
-	    		writeln("Silahkan pilih metode pencarian matriks invers:");
-	    		writeln("1. Eliminasi Gauss-Jordan");
-	    		writeln("2. Melalui matriks adjoin");
+	    		do {
+	    			for(int i=0; i<120;i++) {
+    					write("_");
+   					}
+	    			write("\n");
+		    		writeln("Silahkan pilih metode pencarian matriks invers:");
+	    			writeln("1. Eliminasi Gauss-Jordan");
+	    			writeln("2. Melalui matriks adjoin");
+	    			writeln("3. Kembali ke menu sebelumnya");
+	    			write("Pilih 1-3");
+	    			op = input.nextInt();
+
+	    			switch(op) {
+	    				case 1:
+	    					do{
+	    						write("\n");
+    							writeln("Silahkan pilih metode input matriks");
+    							writeln("1. Input dari layar");
+    							writeln("2. Input dari file");
+    							writeln("3. Kembali ke menu sebelumhya");
+    							write("Pilih 1-3: ");
+    							op1 = input.nextInt();
+
+    							switch(op1) {
+    								case 1:
+    									break;
+    								case 2:
+    									break;
+    								case 3:
+    									break;
+    								default:
+    									System.out.println("Pilihan anda tidak valid");
+    									break;
+    							}
+	    					} while(op1!=3);
+	    					break;
+	    				case 2:
+	    					do{
+	    						write("\n");
+    							writeln("Silahkan pilih metode input matriks");
+    							writeln("1. Input dari layar");
+    							writeln("2. Input dari file");
+    							writeln("3. Kembali ke menu sebelumhya");
+    							write("Pilih 1-3: ");
+    							op1 = input.nextInt();
+
+    							switch(op1) {
+    								case 1:
+    									tab.readMatrixP(tab.getTab());
+    									tab.inversPrint(tab.getTab());
+    									break;
+    								case 2:
+    									tab.filereadMatrixP(tab.getTab());
+    									tab.inversPrint(tab.getTab());
+    									break;
+    								case 3:
+    									break;
+    								default:
+    									System.out.println("Pilihan anda tidak valid");
+    									break;
+    							}
+	    					} while(op1!=3);
+	    					break;
+	    			}
+	    		} while(op!=3);
 
 	    	} else if(in==4) {
 	    		for(int i=0; i<120;i++) {
     				write("_");
    				}
+    			do{
+    				write("\n");
+    				writeln("Silahkan pilih metode input matriks");
+    				writeln("1. Input dari layar");
+    				writeln("2. Input dari file");
+    				writeln("3. Kembali ke menu sebelumhya");
+    				write("Pilih 1-3: ");
+    				op1 = input.nextInt();
+
+    				switch(op1) {
+    					case 1:
+    						tab.readMatrixP(tab.getTab());
+    						tab.kofaktorPrint(tab.getTab());
+    						break;
+    					case 2:
+    						tab.filereadMatrixP(tab.getTab());
+    						tab.kofaktorPrint(tab.getTab());
+    						break;
+    					case 3:
+    						break;
+    					default:
+    						writeln("Pilihan anda tidak valid");
+    						break;
+    				}
+    			} while(op1!=3);
 
 	    	} else if(in==5) {
 	    		for(int i=0; i<120;i++) {
     				write("_");
    				}
+    			do{
+    				write("\n");
+    				writeln("Silahkan pilih metode input matriks");
+    				writeln("1. Input dari layar");
+    				writeln("2. Input dari file");
+    				writeln("3. Kembali ke menu sebelumhya");
+    				write("Pilih 1-3: ");
+    				op1 = input.nextInt();
+
+    				switch(op1) {
+    					case 1:
+    						tab.readMatrixP(tab.getTab());
+    						tab.adjoinPrint(tab.getTab());
+    						break;
+    					case 2:
+    						tab.filereadMatrixP(tab.getTab());
+    						tab.adjoinPrint(tab.getTab());
+    						break;
+    					case 3:
+    						break;
+    					default:
+    						writeln("Pilihan anda tidak valid");
+    						break;
+    				}
+    			} while(op1!=3);
 	    	} else if(in==6) {
 	    		do {
     					for(int i=0; i<120;i++) {
@@ -180,9 +356,17 @@ public class Main {
     					}
     				} while(op!= 3);
 	    	} else if(in==7) {
-
+	    		for(int i=0; i<120;i++) {
+    						write("_");
+    			}
+    			write("\n");
+	    		writeln("Terima kasih telah menggunakan program ini, sampai jumpa!");
 	    	} else {
-
+	    		for(int i=0; i<120;i++) {
+    						write("_");
+    			}
+    			write("\n");
+	    		writeln("Mohon maaf, input anda belum tersedia di dalam menu. Silahkan coba lagi!");
 	    	}
    		} while(in!=7);
    	}

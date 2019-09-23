@@ -307,6 +307,8 @@ public class MatrixPersegi
 			}
 	}
 
+	
+
 	public float determinan(float[][] M)
 	/* Menghitung determinan dari matriks */
 	{
@@ -392,7 +394,7 @@ public class MatrixPersegi
 			}
 
 			return minMat;
-	}
+	}	
 
 	public float[][] kofaktor(float[][] M)
 	/* Membentuk matriks kofaktor dari matriks M */
@@ -457,6 +459,9 @@ public class MatrixPersegi
 
 			return adj;
 	}
+
+
+
 
 	public float[][] invers(float[][] M)
 	/* Menghasilkan invers dari matriks M */
@@ -612,4 +617,210 @@ public class MatrixPersegi
 
 		return colKe_m;
 	}
+
+	public void stgAtasPrint(float[][] M) //Print Setiap step ke layar
+	/* Menghasilkan matriks segitiga atas dengan OBE  dan ditampilkan ke layar*/
+	{
+		// KAMUS LOKAL
+			int i, j, k;
+			float konst;
+			float[] temp;
+
+		// ALGORITMA
+			this.nSwap = 0;
+			for(i = 1; i < getSize(M); i++)
+			{
+				for(j = 0; j < i; j++)
+				{
+					if (M[j][j] == 0)
+					{
+						k = j + 1;
+						while(M[k][k] == 0 && k < getSize(M))
+						{
+							k++;
+						}
+						swapRow(M, j + 1, k + 1);
+						printMatrixP(M);
+						this.nSwap += 1;
+						System.out.print("Jumlah pertukaran baris saat ini:");
+						System.out.println(this.nSwap);
+					}
+					if (M[j][j] != 0)
+					{
+						konst = M[i][j] / M[j][j];
+					}
+					else
+					{
+						konst = 0;
+					}
+
+					temp = entireRow(M, j + 1);
+
+					multiplyRow(M, j + 1, konst);
+					printMatrixP(M);
+					substractRows(M, i + 1, j + 1);
+					printMatrixP(M);
+
+					for (k = 0; k < getSize(M); k++)
+					{
+						M[j][k] = temp[k];
+					}
+				}
+			}
+	}
+
+	public void determinanPrint(float[][] M) //Print setiap step ke layar
+	/* Menampilkan langkah pencarian determinan dari matriks */
+	{
+		// KAMUS LOKAL
+			int i, j;
+			float d, k;
+			float[][] mTemp;
+
+		// ALGORITMA
+			d = 1;
+			mTemp = new float[getSize(M)][getSize(M)];
+
+			copyMatrix(M, mTemp);
+
+			stgAtasPrint(M);
+
+			System.out.print("Nilai Determinan adalah perkalian diagonal\nDeterminan = ");
+			for (i = 0; i < getSize(M); i++)
+			{
+				d *= mTemp[i][i];
+				System.out.print(d);
+				System.out.print(" * ");
+			}
+			System.out.print(-1);
+			System.out.println("^(jumlah pertukaran barisan)");
+
+			System.out.print("= ");
+			for (i = 0; i < getSize(M); i++)
+			{
+				d *= mTemp[i][i];
+				System.out.print(d);
+				System.out.print(" * ");
+			}
+			System.out.print(-1);
+			System.out.print("^");
+			System.out.println(this.nSwap);
+
+			System.out.print("= ");
+			System.out.println(d * pow(-1, this.nSwap));
+	}
+
+	public void kofaktorPrint(float[][] M) 
+	/* Menampilkan pencarian matriks kofaktor dari matriks M */
+	{
+		// KAMUS LOKAL
+			int i, j;
+			float[][] kofMat;
+
+		// ALGORITMA
+
+			kofMat = new float[getSize(M)][getSize(M)];
+
+			for (i = 0; i < getSize(M); i++)
+			{
+				for (j = 0; j < getSize(M); j++)
+				{
+					if ((i + j) % 2 == 0)
+					{	
+						System.out.print("Elemen C");
+						System.out.print(i+1);
+						System.out.print(j+1);
+						System.out.println(" =");
+						kofMat[i][j] = determinan(minorMatrix(M, i, j));
+						determinanPrint(minorMatrix(M,i,j));
+					}
+					else
+					{
+						System.out.print("Elemen C");
+						System.out.print(i+1);
+						System.out.print(j+1);
+						System.out.println(" =");
+						kofMat[i][j] = -1 * determinan(minorMatrix(M, i, j));
+						determinanPrint(minorMatrix(M,i,j));
+						System.out.println("dikalikan (-1)");
+					}
+
+				}
+			}
+
+			System.out.println("Matriks Kofaktor:");
+			printMatrixP(kofMat);
+	}
+
+	public void adjoinPrint(float[][] M)
+	/* Menampilkan penghitungan matriks adjoin dari matriks M */
+	/* dengan transpose kofaktor matriks M */
+	{
+		// KAMUS LOKAL
+			float[][] adj;
+
+		// ALGORITMA
+			adj = new float[getSize(M)][getSize(M)];
+			copyMatrix(kofaktor(M), adj);
+			kofaktorPrint(M);
+			System.out.println("Matriks adjoin adalah transpos dari matriks kofaktor:");
+			transpose(adj);
+			printMatrixP(adj);
+	}
+
+	public void ekspanKofPrint(float[][] M)
+	/* Menampilkan perhitungan determinan matriks M dengan */
+	/* metode ekspansi kofaktor */
+	{
+		// KAMUS LOKAL
+			int j;
+			float det;
+
+		// ALGORITMA
+			det = 0;
+			System.out.println("Determinan:");
+			for (j = 0; j < getSize(M); j++)
+			{
+				System.out.print(M[0][j]);
+				System.out.print("*");
+				System.out.print(kofaktor(M)[0][j]);
+				if(j!= getSize(M)-1) System.out.print(" + ");
+				else System.out.println();
+				det += M[0][j] * kofaktor(M)[0][j];
+			}
+			System.out.print("= ");
+			System.out.println(det);
+	}
+
+	public void inversPrint(float[][] M)
+	/* Menampilkan penghitungan invers dari matriks M */
+	/* Prekondisi : det(M) != 0 */
+	{
+		// KAMUS LOKAL
+			int i, j;
+			float det;
+			float[][] inv;
+
+		// ALGORITMA
+			det = determinan(M);
+
+			inv = new float[getSize(M)][getSize(M)];
+
+			System.out.println("Invers matriks adalah 1/determinan dikalikan matriks adjoin");
+			System.out.print("1/");
+			System.out.print(det);
+			System.out.println("*");
+			printMatrixP(adjoin(M));
+			System.out.println("=");
+			for (i = 0; i < getSize(M); i++)
+			{
+				for (j = 0; j < getSize(M); j++)
+				{
+					inv[i][j] = adjoin(M)[i][j] / det;
+				}
+			}
+
+			printMatrixP(inv);
+	}
+
 }
