@@ -3,6 +3,7 @@
    Linear Algebra */
 
 import java.util.*;
+import java.io.*;
 
 public class CramerMatrix {
 	
@@ -14,6 +15,7 @@ public class CramerMatrix {
 
 	public CramerMatrix() {
 		koefMat = new MatrixPersegi();
+		augmentedMat = new Matrix();
 		result = new float[101];
 		solution = new float[101];
 		neff = 0;
@@ -28,7 +30,7 @@ public class CramerMatrix {
 	}
 
 	public int getSize() {
-		return this.koefMat.getSize(koefMat.getTab());
+		return this.neff;
 	}
 
 	public void copyMatrix(MatrixPersegi tab) {
@@ -59,17 +61,78 @@ public class CramerMatrix {
 	}	
 
 	public void filereadCramer() {
-		Scanner input = new Scanner(System.in);
-		getAug().filereadMatrix();
+		try {
+			System.out.print("Masukkan judul file yang ingin di input: ");
+			String title;
 
-		for(int i=1; i<=getAug().getRow(); i++) {
-			for(int j=1; j<=getAug().getColumn(); j++) {
-				if(j==getAug().getColumn()) this.result[i] = input.nextFloat();
-				else {
-					float x = input.nextFloat();
-					getMatrix().floatToMatrix(i,j,x);
+			Scanner instring = new Scanner(System.in);
+			title = instring.nextLine();
+
+			this.neff = countFileRow(title);
+						
+			File input = new File(title);
+			Scanner fileInput = new Scanner(input);
+
+			for(int i=0; i<this.neff; i++) {
+				for(int j=0; j<this.neff+1; j++) {
+					this.augmentedMat.getTab()[i][j] = fileInput.nextFloat();
 				}
 			}
+
+			getAug().setRow(countFileRow(title));
+			getAug().setColumn(countFileColumn(title));
+		
+			for(int i=1; i<=getAug().getRow(); i++) {
+				for(int j=1; j<=getAug().getColumn(); j++) {
+					if(j == getAug().getColumn()) this.result[i-1] = getAug().elmt(i,j);
+					else this.koefMat.mTab[i-1][j-1] = getAug().elmt(i,j);
+				}
+			}
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("File tersebut tidak ada.");
+		}
+	}
+
+	public int countFileRow(String title) {
+		int row;
+		row = 0;
+		try {
+			File input = new File(title);
+			Scanner fileInput = new Scanner(input);
+
+			while(fileInput.hasNextLine()) {
+				row++;
+				fileInput.nextLine();
+			}
+
+			return row;
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("File tersebut tidak ada.");
+			return 0;
+		}
+	}
+	/* Hitung baris dalam File */
+
+	public int countFileColumn(String title) {
+		int nbElmt, column;
+		try {
+			nbElmt = 0;
+			File input = new File(title);
+			Scanner fileInput = new Scanner(input);
+
+			while(fileInput.hasNextFloat()) {
+				nbElmt++;
+				fileInput.nextFloat();
+			}
+
+			column = nbElmt/ countFileRow(title);
+			return column;
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("File tersebut tidak ada.");
+			return 0;
 		}
 	}
 

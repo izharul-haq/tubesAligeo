@@ -69,7 +69,10 @@ public class Interpolation {
 	public void filereadIntrp() {
 		try {
 			int i=0;
-			File input = new File("intrp.txt");
+			System.out.print("Masukkan judul file yang ingin di input: ");
+			Scanner inputString = new Scanner(System.in);
+			String title = inputString.nextLine();
+			File input = new File(title);
 			Scanner fileInput = new Scanner(input);
 			Scanner inputFloat = new Scanner(System.in);
 

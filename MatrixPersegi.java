@@ -279,7 +279,7 @@ public class MatrixPersegi
 					if (M[j][j] == 0)
 					{
 						k = j + 1;
-						while(M[k][k] == 0 && k < getSize(M))
+						while(M[k][k] == 0 && k < getSize(M)-1)
 						{
 							k++;
 						}
@@ -520,9 +520,12 @@ public class MatrixPersegi
 		// ALGORITMA
 			try
 			{
-				setSize(countFileSize());
+				System.out.print("Masukkan judul file yang akan diinput: ");
+				Scanner instring = new Scanner(System.in);
+				String title = instring.nextLine();
+				setSize(countFileSize(title));
 
-				File input = new File("in.txt");
+				File input = new File(title);
 				Scanner fileInput = new Scanner(input);
 
 				for(i = 0; i < getSize(M); i++)
@@ -535,11 +538,11 @@ public class MatrixPersegi
 			}
 			catch (FileNotFoundException e)
 			{
-				System.out.println("no such file");
+				System.out.println("Tidak ada dile berjudul itu");
 			}
 	}
 
-	public int countFileSize()
+	public int countFileSize(String title)
 	/* Menghitung baris dalam file */
 	{
 		// KAMUS LOKAL
@@ -548,7 +551,7 @@ public class MatrixPersegi
 		// ALGORITMA
 			try {
 				size = 0;
-					File input = new File("in.txt");
+					File input = new File(title);
 					Scanner fileInput = new Scanner(input);
 
 					while(fileInput.hasNextLine())

@@ -1,7 +1,8 @@
 import java.util.*;
 import java.lang.ArrayIndexOutOfBoundsException;
 import java.lang.Math;
-
+import java.io.File;
+import java.io.FileNotFoundException;
 
 /*Author of this Class:
 	Muhammad Mirza Fathan Al Arsyad - 13518111
@@ -60,6 +61,75 @@ public class InverseLinEq {
 			}
 		}
 
+	}
+
+	public void filereadInverseLinEq() {
+		String s;
+		try {
+			Scanner instring = new Scanner(System.in);
+			System.out.print("Masukkan judul file yang akan di input: ");
+			s = instring.nextLine();
+
+			setNeff(countFileRow(s));
+			setKol(1);
+			setRow(countFileRow(s));
+
+			File input = new File(s);
+			Scanner fileInput = new Scanner(input);
+
+			for(int i=0; i<this.effKoe; i++) {
+				for(int j=0; j<this.effKoe+1; j++) {
+					if(j!= this.effKoe) this.koef[i][j] = fileInput.nextFloat();
+					else this.result[i][0]= fileInput.nextFloat();
+				}
+			}
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("file yang dimaksud tidak ada");
+		}
+
+	}
+
+	public int countFileRow(String s) {
+		int row;
+		row = 0;
+		try {
+			File input = new File(s);
+			Scanner fileInput = new Scanner(input);
+
+			while(fileInput.hasNextLine()) {
+				row++;
+				fileInput.nextLine();
+			}
+
+			return row;
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("no such file");
+			return 0;
+		}
+	}
+	/* Hitung baris dalam File */
+
+	public int countFileColumn(String s) {
+		int nbElmt, column;
+		try {
+			nbElmt = 0;
+			File input = new File(s);
+			Scanner fileInput = new Scanner(input);
+
+			while(fileInput.hasNextFloat()) {
+				nbElmt++;
+				fileInput.nextFloat();
+			}
+
+			column = nbElmt/ countFileRow(s);
+			return column;
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("no such file");
+			return 0;
+		}
 	}
 
 	public void doInverse() {

@@ -227,10 +227,16 @@ public class Matrix {
 	
 	public void filereadMatrix() {
 		try {
-			setRow(countFileRow());
-			setColumn(countFileColumn());
+			System.out.print("Masukkan judul file yang ingin di input: ");
+			String title;
 
-			File input = new File("in.txt");
+			Scanner instring = new Scanner(System.in);
+			title = instring.nextLine();
+
+			setRow(countFileRow(title));
+			setColumn(countFileColumn(title)); 
+			
+			File input = new File(title);
 			Scanner fileInput = new Scanner(input);
 
 			for(int i=0; i<getRow(); i++) {
@@ -240,18 +246,18 @@ public class Matrix {
 			}
 		}
 		catch (FileNotFoundException e) {
-			System.out.println("no such file");
+			System.out.println("File tersebut tidak ada.");
 		}
 	}
 	/* Membaca input dari file.txt */
 
 		
 
-	public int countFileRow() {
+	public int countFileRow(String title) {
 		int row;
 		row = 0;
 		try {
-			File input = new File("in.txt");
+			File input = new File(title);
 			Scanner fileInput = new Scanner(input);
 
 			while(fileInput.hasNextLine()) {
@@ -262,17 +268,17 @@ public class Matrix {
 			return row;
 		}
 		catch (FileNotFoundException e) {
-			System.out.println("no such file");
+			System.out.println("File tersebut tidak ada.");
 			return 0;
 		}
 	}
 	/* Hitung baris dalam File */
 
-	public int countFileColumn() {
+	public int countFileColumn(String title) {
 		int nbElmt, column;
 		try {
 			nbElmt = 0;
-			File input = new File("in.txt");
+			File input = new File(title);
 			Scanner fileInput = new Scanner(input);
 
 			while(fileInput.hasNextFloat()) {
@@ -280,11 +286,11 @@ public class Matrix {
 				fileInput.nextFloat();
 			}
 
-			column = nbElmt/ countFileRow();
+			column = nbElmt/ countFileRow(title);
 			return column;
 		}
 		catch (FileNotFoundException e) {
-			System.out.println("no such file");
+			System.out.println("File tersebut tidak ada.");
 			return 0;
 		}
 	}

@@ -111,6 +111,8 @@ public class Main {
     									iTab.doInverse();
     									break;
     								case 2:
+    									iTab.filereadInverseLinEq();
+    									iTab.doInverse();
     									break;
     								case 3:
     									break;
