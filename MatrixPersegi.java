@@ -683,13 +683,15 @@ public class MatrixPersegi
 
 			copyMatrix(M, mTemp);
 
+			System.out.println("\nBentuk matriks segitiga atas dengan Operasi Baris Elementer:");
+
 			stgAtasPrint(M);
 
-			System.out.print("Nilai Determinan adalah perkalian diagonal\nDeterminan = ");
+			System.out.print("\nNilai Determinan adalah perkalian diagonal.\nDeterminan = ");
 			for (i = 0; i < getSize(M); i++)
 			{
 				d *= mTemp[i][i];
-				System.out.print(d);
+				System.out.print(mTemp[i][i]);
 				System.out.print(" * ");
 			}
 			System.out.print(-1);
@@ -698,8 +700,7 @@ public class MatrixPersegi
 			System.out.print("= ");
 			for (i = 0; i < getSize(M); i++)
 			{
-				d *= mTemp[i][i];
-				System.out.print(d);
+				System.out.print(mTemp[i][i]);
 				System.out.print(" * ");
 			}
 			System.out.print(-1);
@@ -727,7 +728,7 @@ public class MatrixPersegi
 				{
 					if ((i + j) % 2 == 0)
 					{	
-						System.out.print("Elemen C");
+						System.out.print("\nElemen C");
 						System.out.print(i+1);
 						System.out.print(j+1);
 						System.out.println(" =");
@@ -778,7 +779,7 @@ public class MatrixPersegi
 
 		// ALGORITMA
 			det = 0;
-			System.out.println("Determinan:");
+			System.out.println("\nDeterminan:");
 			for (j = 0; j < getSize(M); j++)
 			{
 				System.out.print(M[0][j]);
