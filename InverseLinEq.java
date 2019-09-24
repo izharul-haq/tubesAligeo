@@ -68,7 +68,11 @@ public class InverseLinEq {
 		m.setSize(this.effKoe);
 
 		try {
-			for(int i=0; i<this.effKoe; i++) {
+
+			if(m.determinan(this.koef) == 0) 
+				System.out.println("Determinan Matriks koefisien bernilai nol, sehingga matriks koefisien tidak memiliki invers.");
+			else {
+				for(int i=0; i<this.effKoe; i++) {
 				for(int j=0; j<this.effKoe; j++) {
 					tabInverse[i][j] = m.invers(this.koef)[i][j];		
 				}
@@ -179,7 +183,7 @@ public class InverseLinEq {
 			}
 
 		}
-
+			}
 
 		catch (java.lang.ArrayIndexOutOfBoundsException e) {
 			System.out.println("Invalid index");

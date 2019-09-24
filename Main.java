@@ -73,11 +73,17 @@ public class Main {
     							switch(op1) {
     								case 1:
     									cTab.readCramer();
-    									cTab.cramer();
+    									if(cTab.getMatrix().determinan(cTab.getMatrix().getTab()) == 0)
+    										writeln("Determinan matriks bernilai nol. Kaidah cramer tidak bisa dipakai untuk pencarian solusi sistem.");
+    									else
+    										cTab.cramer();
     									break;
     								case 2:
     									cTab.filereadCramer();
-    									cTab.cramer();
+    									if(cTab.getMatrix().determinan(cTab.getMatrix().getTab())== 0)
+    										writeln("Determinan matriks bernilai nol. Kaidah cramer tidak bisa dipakai untuk pencarian solusi sistem.");
+    									else
+    										cTab.cramer();
     									break;
     								case 3:
     									break;
@@ -248,11 +254,17 @@ public class Main {
     							switch(op1) {
     								case 1:
     									tab.readMatrixP(tab.getTab());
-    									tab.inversPrint(tab.getTab());
+    									if(tab.determinan(tab.getTab()) == 0)
+    										writeln("Determinan matriks bernilai nol sehingga tidak ada invers untuk matriks.");
+    									else
+    										tab.inversPrint(tab.getTab());
     									break;
     								case 2:
     									tab.filereadMatrixP(tab.getTab());
-    									tab.inversPrint(tab.getTab());
+    									if(tab.determinan(tab.getTab()) == 0)
+    										writeln("Determinan matriks bernilai nol sehingga tidak ada invers untuk matriks.");
+    									else
+    										tab.inversPrint(tab.getTab());
     									break;
     								case 3:
     									break;

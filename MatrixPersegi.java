@@ -1,6 +1,7 @@
 import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.Math;
 
 public class MatrixPersegi
 {
@@ -498,7 +499,9 @@ public class MatrixPersegi
 			int i, j;
 
 		// ALGORITMA
+			System.out.print("Masukkan ukuran Matriks persegi: ");
 			setSquare();
+			System.out.println("Masukkan elemen elemen matriks, dipisahkan dengan spasi. Untuk pemisahan baris, gunakan enter:");
 			for(i = 0; i < getSize(M); i++)
 			{
 				for(j = 0; j < getSize(M); j++)
@@ -575,7 +578,7 @@ public class MatrixPersegi
 			{
 				for(j = 0; j < getSize(M); j++)
 				{
-					System.out.print(elmt(M, i + 1, j + 1) + "  ");
+					System.out.print(round2(elmt(M, i + 1, j + 1)) + "  ");
 					if(j == getSize(M) - 1)
 					{
 						System.out.println();
@@ -639,6 +642,7 @@ public class MatrixPersegi
 						{
 							k++;
 						}
+						printMatrixP(M);
 						swapRow(M, j + 1, k + 1);
 						printMatrixP(M);
 						this.nSwap += 1;
@@ -655,7 +659,7 @@ public class MatrixPersegi
 					}
 
 					temp = entireRow(M, j + 1);
-
+					printMatrixP(M);
 					multiplyRow(M, j + 1, konst);
 					printMatrixP(M);
 					substractRows(M, i + 1, j + 1);
@@ -665,6 +669,7 @@ public class MatrixPersegi
 					{
 						M[j][k] = temp[k];
 					}
+					printMatrixP(M);
 				}
 			}
 	}
@@ -685,13 +690,13 @@ public class MatrixPersegi
 
 			System.out.println("\nBentuk matriks segitiga atas dengan Operasi Baris Elementer:");
 
-			stgAtasPrint(M);
+			stgAtasPrint(mTemp);
 
 			System.out.print("\nNilai Determinan adalah perkalian diagonal.\nDeterminan = ");
 			for (i = 0; i < getSize(M); i++)
 			{
 				d *= mTemp[i][i];
-				System.out.print(mTemp[i][i]);
+				System.out.print(round2(mTemp[i][i]));
 				System.out.print(" * ");
 			}
 			System.out.print(-1);
@@ -700,7 +705,7 @@ public class MatrixPersegi
 			System.out.print("= ");
 			for (i = 0; i < getSize(M); i++)
 			{
-				System.out.print(mTemp[i][i]);
+				System.out.print(round2(mTemp[i][i]));
 				System.out.print(" * ");
 			}
 			System.out.print(-1);
@@ -731,16 +736,16 @@ public class MatrixPersegi
 						System.out.print("\nElemen C");
 						System.out.print(i+1);
 						System.out.print(j+1);
-						System.out.println(" =");
+						System.out.println(" = ");
 						kofMat[i][j] = determinan(minorMatrix(M, i, j));
 						determinanPrint(minorMatrix(M,i,j));
 					}
 					else
 					{
-						System.out.print("Elemen C");
+						System.out.print("\nElemen C");
 						System.out.print(i+1);
 						System.out.print(j+1);
-						System.out.println(" =");
+						System.out.println(" = determinan dari matriks minor berikut");
 						kofMat[i][j] = -1 * determinan(minorMatrix(M, i, j));
 						determinanPrint(minorMatrix(M,i,j));
 						System.out.println("dikalikan (-1)");
@@ -749,7 +754,7 @@ public class MatrixPersegi
 				}
 			}
 
-			System.out.println("Matriks Kofaktor:");
+			System.out.println("\nMatriks Kofaktor:");
 			printMatrixP(kofMat);
 	}
 
@@ -764,7 +769,7 @@ public class MatrixPersegi
 			adj = new float[getSize(M)][getSize(M)];
 			copyMatrix(kofaktor(M), adj);
 			kofaktorPrint(M);
-			System.out.println("Matriks adjoin adalah transpos dari matriks kofaktor:");
+			System.out.println("\nMatriks adjoin adalah transpos dari matriks kofaktor:");
 			transpose(adj);
 			printMatrixP(adj);
 	}
@@ -807,12 +812,12 @@ public class MatrixPersegi
 
 			inv = new float[getSize(M)][getSize(M)];
 
-			System.out.println("Invers matriks adalah 1/determinan dikalikan matriks adjoin");
-			System.out.print("1/");
+			System.out.println("\nInvers matriks adalah 1/determinan dikalikan matriks adjoin");
+			System.out.print("\n(1/");
 			System.out.print(det);
-			System.out.println("*");
+			System.out.print(")*");
 			printMatrixP(adjoin(M));
-			System.out.println("=");
+			System.out.println("\n=");
 			for (i = 0; i < getSize(M); i++)
 			{
 				for (j = 0; j < getSize(M); j++)
@@ -822,6 +827,10 @@ public class MatrixPersegi
 			}
 
 			printMatrixP(inv);
+	}
+
+	public float round2(float f) {
+		return (float) Math.round(f * 100) / 100;
 	}
 
 }
