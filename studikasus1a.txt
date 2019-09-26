@@ -1,0 +1,2 @@
+Maka, solusinya berdasarkan kaidah Cramer adalah:
+x1 = 3.999997, x2 = -16.0, x3 = -6.0, x4 = -6.0

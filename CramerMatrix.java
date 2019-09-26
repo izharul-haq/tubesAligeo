@@ -46,11 +46,11 @@ public class CramerMatrix {
 		Scanner input = new Scanner(System.in);
 		System.out.print("Tentukan banyak SPL: ");
 		int size = input.nextInt();
-		getMatrix().setSize(size);
+		this.neff = size;
 
 		System.out.println("Input koefisien-koefisen dan diikuti dengan hasil, dipisahkan dengan spasi:");
-		for(int i=1; i<=getSize(); i++) {
-			for(int j=1; j<=getSize()+1; j++) {
+		for(int i=1; i<=this.neff; i++) {
+			for(int j=1; j<=this.neff+1; j++) {
 				if(j==getSize()+1) this.result[i]= input.nextFloat();
 				else {
 					float x = input.nextFloat();

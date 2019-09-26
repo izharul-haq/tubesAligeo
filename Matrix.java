@@ -6,6 +6,7 @@
 import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.*;
 
 public class Matrix {
 	private float[][] mTab;
@@ -217,8 +218,10 @@ public class Matrix {
 
 	/* Prosedur Input */
 	public void readMatrix() {
+		System.out.print("Masukkan ukuran baris x kolom dipisahkan spasi: ");
 		Scanner input = new Scanner(System.in);
 		setSize();
+		System.out.println("Masukkan koefisien-koefisien, dipisahkan spasi, diikuti dengan hasil, setelah itu enter untuk memisahkan setiap barisnya.");
 		for(int i=0; i<getRow(); i++) {
 			for(int j=0; j<getColumn(); j++) {
 				this.mTab[i][j] = input.nextFloat();
@@ -309,5 +312,32 @@ public class Matrix {
 				}
 			}
 		}  
+	}
+
+	public void fileprintMatrix() {
+		try {
+
+			System.out.print("Beri judul pada file yang akan di output: ");
+
+			Scanner inp = new Scanner(System.in);
+			String fileName = inp.nextLine();
+
+			FileOutputStream fileout = new FileOutputStream(fileName);
+
+			PrintStream output = new PrintStream (fileout);
+
+			for(int i=1; i<=getRow(); i++) {
+				for(int j=1; j<=getColumn(); j++) {
+					if(j!= getColumn()) {
+						output.print(elmt(i,j));
+						output.print(" ");
+					} else {
+						output.print(elmt(i,j));
+						output.println();
+					}
+				}
+			}
+
+		} catch (FileNotFoundException e) {}
 	}
 }

@@ -6,6 +6,7 @@
 	Main Program */
 
 import java.util.*;
+import java.io.*;
 
 public class Main {
 	public static void main(String[] args) {
@@ -16,6 +17,8 @@ public class Main {
 			MatrixPersegi tab = new MatrixPersegi();
     		CramerMatrix cTab = new CramerMatrix();
 			InverseLinEq iTab = new InverseLinEq();
+			Matrix maTab = new Matrix();
+			InvEq tIn = new InvEq();
 			
 			for(int i=0; i<120;i++) {
     			write("_");
@@ -53,11 +56,82 @@ public class Main {
 
 	    			switch(op) {
     					case 1:
-
+    						do {
+	    						for(int i=0; i<120;i++) {
+    								write("_");
+			   					}
+	  		 					write("\n");
+				    			writeln("Silahkan pilih metode input SPL:");
+    							writeln("1. Input dari Layar");
+    							writeln("2. Input dari file");
+	   							writeln("3. Kembali ke menu sebelumnya");
+  								write("Pilih 1-3: ");
+    							op1 = input.nextInt();
+    							switch(op1) {
+    								case 1:
+    									maTab.readMatrix(); 
+    									maTab.jordanElimination();
+    									maTab.printMatrix();
+    									System.out.print("Apakah anda akan menyimpan dalam file?(0/1) ");
+    									Scanner t = new Scanner(System.in);
+    									int p = t.nextInt();
+    									if(p==1) maTab.fileprintMatrix();
+    									break;
+    								case 2:
+    									maTab.filereadMatrix();
+    									maTab.jordanElimination();
+    									maTab.printMatrix();
+    									System.out.print("Apakah anda akan menyimpan dalam file?(0/1) ");
+    									t = new Scanner(System.in);
+    									p = t.nextInt();
+    									if(p==1) maTab.fileprintMatrix();
+    									break;
+    								case 3:
+    									break;
+    								default:
+    									writeln("Pilihan anda tidak valid. Silahkan coba lagi.");
+    									break;
+    							}
+    						} while(op1!=3);
     						break;
     					case 2:
-
-    						break;
+    						do {
+	    						for(int i=0; i<120;i++) {
+    								write("_");
+			   					}
+	  		 					write("\n");
+				    			writeln("Silahkan pilih metode input SPL:");
+    							writeln("1. Input dari Layar");
+    							writeln("2. Input dari file");
+	   							writeln("3. Kembali ke menu sebelumnya");
+  								write("Pilih 1-3: ");
+    							op1 = input.nextInt();
+    							switch(op1) {
+    								case 1:
+    									maTab.readMatrix(); 
+    									maTab.jordanElimination();
+    									maTab.printMatrix();
+    									System.out.print("Apakah anda akan menyimpan dalam file?(0/1) ");
+    									Scanner t = new Scanner(System.in);
+    									int p = t.nextInt();
+    									if(p==1) maTab.fileprintMatrix();
+    									break;
+    								case 2:
+    									maTab.filereadMatrix();
+    									maTab.jordanElimination();
+    									maTab.printMatrix();
+    									System.out.print("Apakah anda akan menyimpan dalam file?(0/1) ");
+    									t = new Scanner(System.in);
+    									p = t.nextInt();
+    									if(p==1) maTab.fileprintMatrix();
+    									break;
+    								case 3:
+    									break;
+    								default:
+    									writeln("Pilihan anda tidak valid. Silahkan coba lagi.");
+    									break;
+    							}
+    						} while(op1!=3);
     					case 3:
     						do {
 	    						for(int i=0; i<120;i++) {
@@ -232,8 +306,12 @@ public class Main {
 
     							switch(op1) {
     								case 1:
+    									tIn.readIv();
+    									tIn.doInv();
     									break;
     								case 2:
+    									tIn.filereadIv();
+    									tIn.doInv();
     									break;
     								case 3:
     									break;
