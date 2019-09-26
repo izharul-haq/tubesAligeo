@@ -204,5 +204,36 @@ public class CramerMatrix {
 			if(i!=this.neff) System.out.print(", ");
 		}
 		System.out.println();
+		System.out.print("Apakah anda akan menyimpan solusi ke dalam file? (1/0): ");
+
+		Scanner f = new Scanner(System.in);
+		int o = f.nextInt();
+
+		if(o==1) fileprintCramer();
+	}
+
+	public void fileprintCramer(){
+		try {
+			System.out.print("Beri judul pada file yang akan di output: ");
+
+			Scanner inp = new Scanner(System.in);
+			String fileName = inp.nextLine();
+
+			FileOutputStream fileout = new FileOutputStream(fileName);
+
+			PrintStream output = new PrintStream (fileout);
+
+			output.println("Maka, solusinya berdasarkan kaidah Cramer adalah:");
+			for(int i=1; i<=this.neff; i++) {
+				output.print("x");
+				output.print(i);
+				output.print(" = ");
+				output.print(this.solution[i]);
+				if(i!=this.neff) output.print(", ");
+			}
+			output.println();
+		} catch (FileNotFoundException e) {
+		}
+
 	}
 }

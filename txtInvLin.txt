@@ -1,0 +1,7 @@
+Maka, berdasarkan invers:
+1.0 0.0 0.0 1.79
+0.0 1.0 0.0 2.34
+0.0 0.0 1.0 0.1
+Maka, solusinya adalah: 
+x1 = 1.79, x2 = 2.34, x3 = 0.1
+

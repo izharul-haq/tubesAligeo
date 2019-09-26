@@ -170,6 +170,14 @@ public class Interpolation {
 		System.out.print(interpolateX());
 		System.out.print(") = ");
 		System.out.println(fX(interpolateX()));
+
+		System.out.print("Apakah anda ingin menyimpan ke dalam file? (1/0): ");
+		Scanner f = new Scanner(System.in);
+		int o = f.nextInt();
+
+		if(o==1) {
+			fileprintIntrp();
+		}
 	}
 
 	public float fX(float x) {
@@ -180,5 +188,65 @@ public class Interpolation {
 			result += getMatrix().elmt(i, column)*power(x, row-i);
 		}
 		return result;
+	}
+
+	public void fileprintIntrp() {
+		try {
+			System.out.print("Beri judul pada file yang akan di output: ");
+			Scanner inp = new Scanner(System.in);
+			String fileName = inp.nextLine();
+			FileOutputStream fileout = new FileOutputStream(fileName);
+
+			PrintStream output = new PrintStream (fileout);
+
+			output.print("f(x) = ");
+
+			if(getMatrix().elmt(1, getMatrix().getColumn())==1) {
+				output.print("");
+			} else if(getMatrix().elmt(1, getMatrix().getColumn())==-1) {
+				output.print("-");
+			} else {
+				output.print(getMatrix().elmt(1, getMatrix().getColumn()));	
+			}
+
+			if(getMatrix().getRow()!=1) {
+				if(getEffValue()==2) {
+					output.print("x");
+				} else {
+					output.print("x^");
+					output.print(getEffValue()-1);
+				}
+			}
+
+			for(int i=2; i<= getMatrix().getRow(); i++) {
+				if(getMatrix().elmt(i, getMatrix().getColumn()) < 0) {
+					output.print(" - ");
+					output.print((-1)*getMatrix().elmt(i, getMatrix().getColumn()));
+					if(i != getMatrix().getRow()) {
+						if(i == getMatrix().getRow()-1) output.print("x");
+						else {
+							output.print("x^");
+							output.print(getEffValue()-i);
+						}
+					}
+				} else if(getMatrix().elmt(i, getMatrix().getColumn()) > 0) {
+					output.print(" + ");
+					output.print(getMatrix().elmt(i, getMatrix().getColumn()));
+					if(i != getMatrix().getRow()) {
+						if(i == getMatrix().getRow()-1) output.print("x");
+						else {
+							output.print("x^");
+							output.print(getEffValue()-i);
+						}
+					}
+				} 
+			}
+			output.println();
+			output.print("f(");
+			output.print(interpolateX());
+			output.print(") = ");
+			output.println(fX(interpolateX()));
+			
+		} catch (FileNotFoundException e) {}
 	}
 }

@@ -11,6 +11,7 @@ public class Matrix {
 	private float[][] mTab;
 	private int row;
 	private int column;
+	private String fileName;
 	public static final int maxSize = 100;
 
 	/* Konstruktor */
@@ -309,27 +310,4 @@ public class Matrix {
 			}
 		}  
 	}
-
-/*
-	public void fileprintMatrix() {
-		//Input nama file
-
-		//cetak ke file
-		File output = new File(fileName);
-
-
-		}
-	public void makefileOutput() {
-		System.out.print("Simpan file sebagai (<nama>.txt): ");
-		String fileName;
-		Scanner input = new Scanner(System.in);
-		fileName = input.nextLine();
-
-		PrintStream outputFile = new PrintStream(new FileOutputStream(fileName));
-	}
-
-	public String outputFileName() {
-		
-	}
-	*/
 }

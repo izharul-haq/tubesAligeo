@@ -3,6 +3,7 @@ import java.lang.ArrayIndexOutOfBoundsException;
 import java.lang.Math;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.*;
 
 /*Author of this Class:
 	Muhammad Mirza Fathan Al Arsyad - 13518111
@@ -14,6 +15,7 @@ public class InverseLinEq {
 	private float[][] koef;
 	private float[][] result;
 	private float[] solution;
+	private float[][] identity;
 	private int effKoe;
 	private int effKol;
 	private int effRow;
@@ -134,7 +136,7 @@ public class InverseLinEq {
 
 	public void doInverse() {
 		float[][] tabInverse = new float[this.effKoe][this.effKoe];
-		float[][] identity = new float[this.effKoe][this.effKoe];
+		identity = new float[this.effKoe][this.effKoe];
 		m.setSize(this.effKoe);
 
 		try {
@@ -253,10 +255,60 @@ public class InverseLinEq {
 			}
 
 		}
-			}
+
+		System.out.print("Apakah anda akan menyimpan ke dalam file (1/0): ");
+		Scanner f = new Scanner (System.in);
+		int o = f.nextInt();
+
+		if(o==1) fileprintInverseLinEq();
+	}
 
 		catch (java.lang.ArrayIndexOutOfBoundsException e) {
 			System.out.println("Invalid index");
 		}
+	}
+
+	public void fileprintInverseLinEq() {
+		try {
+
+			System.out.print("Beri judul pada file yang akan di output: ");
+
+			Scanner inp = new Scanner(System.in);
+			String fileName = inp.nextLine();
+
+			FileOutputStream fileout = new FileOutputStream(fileName);
+
+			PrintStream output = new PrintStream (fileout);
+
+			if(Math.abs(m.determinan(this.koef)) <= 0.00000000001) {
+				output.println("Determinan Matriks koefisien bernilai nol, sehingga matriks koefisien tidak memiliki invers.");
+			} else {
+				output.println("Maka, berdasarkan invers:");
+
+				for(int i=0; i<this.effKoe; i++) {
+					for(int j=0; j<this.effKoe+1; j++) {
+						if(j< this.effKoe) {
+							output.print((float)Math.round((identity[i][j])*100)/100);
+							output.print(" ");
+						} else {
+							output.println((float)Math.round((solution[i])*100)/100);
+						}
+					}
+				}
+
+				output.println("Maka, solusinya adalah: ");
+
+				for(int i=0; i<this.effKoe; i++) {
+					output.print("x");
+					output.print(i+1);
+					output.print(" = ");
+					output.print((float)Math.round((solution[i])*100)/100);
+					if(i==this.effKoe-1) output.println();
+					else output.print(", ");
+				}
+				output.println();
+			}
+			
+		} catch (FileNotFoundException e) {}
 	}
 }

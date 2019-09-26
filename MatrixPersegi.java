@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.File;
+import java.io.*;
 import java.io.FileNotFoundException;
 import java.lang.Math;
 
@@ -675,6 +676,59 @@ public class MatrixPersegi
 					printMatrixP(M);
 				}
 			}
+
+			System.out.print("Apakah anda akan menyimpan ke dalam file? (0/1): ");
+			Scanner f = new Scanner(System.in);
+
+			int op = f.nextInt();
+
+			if(op ==1) {
+				try {
+					System.out.print("Beri judul pada file yang akan di output: ");
+
+					Scanner inp = new Scanner(System.in);
+					String fileName = inp.nextLine();
+
+					FileOutputStream fileout = new FileOutputStream(fileName);
+
+					PrintStream output = new PrintStream (fileout);
+					for(i=0; i<getSize(M); i++) {
+						for(j=0; j<getSize(M); j++) {
+							output.print(M[i][j]);
+							if(j!=getSize(M)-1) {
+								output.print(" ");
+							} else {
+								output.println();
+							}
+						}
+					}
+
+					output.print("Det = ");
+					float d = 1;
+					for (i = 0; i < getSize(M); i++)
+					{
+						d *= M[i][i];
+						output.print(round2(M[i][i]));
+						output.print(" * ");
+					}
+					output.print(-1);
+					output.println("^(jumlah pertukaran barisan)");
+
+					output.print("= ");
+					for (i = 0; i < getSize(M); i++)
+					{
+						output.print(round2(M[i][i]));
+						output.print(" * ");
+					}
+					output.print(-1);
+					output.print("^");
+					output.println(this.nSwap);
+
+					output.print("= ");
+					output.println(d * pow(-1, this.nSwap));
+
+				} catch (FileNotFoundException e) {}	
+			}
 	}
 
 	public void determinanPrint(float[][] M) //Print setiap step ke layar
@@ -759,6 +813,13 @@ public class MatrixPersegi
 
 			System.out.println("\nMatriks Kofaktor:");
 			printMatrixP(kofMat);
+
+			System.out.print("Apakah anda akan menyimpan ke dalam file? (0/1): ");
+			Scanner f = new Scanner(System.in);
+
+			int op = f.nextInt();
+
+			if(op ==1) fileprintMatrixP(kofMat);
 	}
 
 	public void adjoinPrint(float[][] M)
@@ -775,6 +836,13 @@ public class MatrixPersegi
 			System.out.println("\nMatriks adjoin adalah transpos dari matriks kofaktor:");
 			transpose(adj);
 			printMatrixP(adj);
+
+			System.out.print("Apakah anda akan menyimpan ke dalam file? (0/1): ");
+			Scanner f = new Scanner(System.in);
+
+			int op = f.nextInt();
+
+			if(op ==1) fileprintMatrixP(adj);
 	}
 
 	public void ekspanKofPrint(float[][] M)
@@ -799,7 +867,40 @@ public class MatrixPersegi
 			}
 			System.out.print("= ");
 			System.out.println(det);
-	}
+
+			System.out.print("Apakah anda akan menyimpan ke dalam file? (0/1): ");
+			Scanner f = new Scanner(System.in);
+
+			int op = f.nextInt();
+
+			if(op ==1) {
+				try {
+
+					System.out.print("Beri judul pada file yang akan di output: ");
+
+					Scanner inp = new Scanner(System.in);
+					String fileName = inp.nextLine();
+
+					FileOutputStream fileout = new FileOutputStream(fileName);
+
+					PrintStream output = new PrintStream (fileout);
+					output.println("\nDeterminan:");
+
+					for (j = 0; j < getSize(M); j++)
+					{
+						output.print(M[0][j]);
+						output.print("*");
+						output.print(kofaktor(M)[0][j]);
+						if(j!= getSize(M)-1) output.print(" + ");
+						else output.println();
+					}
+					output.print("= ");
+					output.println(det);
+					} catch (FileNotFoundException e) {}	
+				}
+
+			}
+
 
 	public void inversPrint(float[][] M)
 	/* Menampilkan penghitungan invers dari matriks M */
@@ -830,10 +931,43 @@ public class MatrixPersegi
 			}
 
 			printMatrixP(inv);
+
+			System.out.print("Apakah anda akan menyimpan ke dalam file? (0/1): ");
+			Scanner f = new Scanner(System.in);
+
+			int op = f.nextInt();
+
+			if(op ==1) fileprintMatrixP(inv);
 	}
 
 	public float round2(float f) {
 		return (float) Math.round(f * 100) / 100;
 	}
 
+	public void fileprintMatrixP(float[][] M) {
+		try {
+
+			System.out.print("Beri judul pada file yang akan di output: ");
+
+			Scanner inp = new Scanner(System.in);
+			String fileName = inp.nextLine();
+
+			FileOutputStream fileout = new FileOutputStream(fileName);
+
+			PrintStream output = new PrintStream (fileout);
+
+			for(int i=0; i<getSize(M); i++) {
+				for(int j=0; j<getSize(M); j++) {
+					if(j!= getSize(M)-1) {
+						output.print(M[i][j]);
+						output.print(" ");
+					} else {
+						output.print(M[i][j]);
+						output.println();
+					}
+				}
+			}
+
+		} catch (FileNotFoundException e) {}
+	}
 }
